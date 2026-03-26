@@ -7,7 +7,6 @@ app.use('/static/*', serveStatic({ root: './' }))
 
 app.post('/api/apply', async (c) => {
   const body = await c.req.json()
-  // Handle application form submission
   return c.json({ success: true, message: 'Application received' })
 })
 
@@ -18,756 +17,772 @@ app.get('/', (c) => {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GTH Academy — Բիզնես Կրթական Հարթակ</title>
-  <meta name="description" content="GTH Academy — Բիզնես կրթական հարթակ և էկոհամակարգ: Սովորեք, կառուցեք և զարգացրեք ձեր բիզնեսը:" />
+  <meta name="description" content="GTH Academy — Բիզնես կրթական հարթակ և էկոհամակարգ:" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg-primary: #111213;
-      --bg-secondary: #1a1b1d;
-      --bg-card: #1f2022;
-      --bg-card-hover: #252628;
-      --border: rgba(255,255,255,0.08);
-      --border-light: rgba(255,255,255,0.12);
-      --text-primary: #ffffff;
-      --text-secondary: #a0a3a8;
-      --text-muted: #666a72;
-      --accent: #ffffff;
-      --accent-dim: rgba(255,255,255,0.1);
-      --gold: #c9a84c;
-      --gold-dim: rgba(201,168,76,0.15);
+      --bg:        #0d0e0f;
+      --bg-1:      #111314;
+      --bg-2:      #161819;
+      --bg-3:      #1c1e20;
+      --bg-4:      #222527;
+      --border-0:  rgba(255,255,255,0.05);
+      --border-1:  rgba(255,255,255,0.09);
+      --border-2:  rgba(255,255,255,0.14);
+      --text-1:    #ffffff;
+      --text-2:    #9ea3ab;
+      --text-3:    #555c66;
+      /* Accent — чистый синевато-белый / electric indigo */
+      --a:         #6e6eff;
+      --a-soft:    rgba(110,110,255,0.12);
+      --a-border:  rgba(110,110,255,0.28);
+      --a-glow:    rgba(110,110,255,0.18);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
       line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── SCROLLBAR ─── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg-primary); }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+    ::selection { background: var(--a-soft); color: var(--text-1); }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 2px; }
 
-    /* ─── TYPOGRAPHY ─── */
-    .tag {
+    /* ── UTILS ── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+    section { padding: 100px 0; }
+
+    .chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); border: 1px solid var(--border-1); border-radius: 100px;
+      padding: 5px 14px;
+    }
+    .chip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--a); flex-shrink:0; }
+
+    .label {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text-muted);
-      border: 1px solid var(--border); border-radius: 100px;
-      padding: 5px 14px; margin-bottom: 20px;
-    }
-    .tag span { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; }
-
-    h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
-
-    .section-title {
-      font-size: clamp(32px, 5vw, 52px);
-      color: var(--text-primary);
-      margin-bottom: 16px;
-    }
-    .section-subtitle {
-      font-size: 16px; color: var(--text-secondary);
-      max-width: 520px; line-height: 1.7;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--a); background: var(--a-soft); border: 1px solid var(--a-border);
+      border-radius: 100px; padding: 5px 14px;
     }
 
-    /* ─── LAYOUT ─── */
-    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-    section { padding: 96px 0; }
+    h1,h2,h3 { letter-spacing: -0.025em; line-height: 1.08; }
 
-    /* ─── BUTTONS ─── */
+    .sec-title {
+      font-size: clamp(30px,4.5vw,50px); font-weight: 800;
+      color: var(--text-1); margin-bottom: 14px;
+    }
+    .sec-sub {
+      font-size: 16px; color: var(--text-2); line-height: 1.72; max-width: 520px;
+    }
+    .rule { width: 40px; height: 2px; background: var(--a); border-radius: 2px; margin: 18px 0 26px; }
+
+    /* ── BUTTONS ── */
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 14px; font-weight: 600; letter-spacing: 0.01em;
-      padding: 14px 28px; border-radius: 8px;
-      border: none; cursor: pointer; transition: all 0.2s ease;
-      text-decoration: none; white-space: nowrap;
+      font-size: 14px; font-weight: 600; padding: 13px 26px; border-radius: 10px;
+      border: none; cursor: pointer; transition: all .2s ease;
+      text-decoration: none; white-space: nowrap; font-family: inherit;
     }
-    .btn-primary {
-      background: var(--text-primary); color: var(--bg-primary);
-    }
-    .btn-primary:hover { background: #e8e8e8; transform: translateY(-1px); }
+    .btn-white  { background:#fff; color:#0d0e0f; }
+    .btn-white:hover  { background:#e9e9e9; transform:translateY(-1px); box-shadow:0 8px 24px rgba(0,0,0,.4); }
+    .btn-accent { background: var(--a); color:#fff; box-shadow:0 0 0 0 var(--a-glow); }
+    .btn-accent:hover { background:#5c5cf0; transform:translateY(-1px); box-shadow:0 8px 32px var(--a-glow); }
+    .btn-ghost  { background:transparent; color:var(--text-1); border:1px solid var(--border-1); }
+    .btn-ghost:hover  { background:var(--bg-3); border-color:var(--border-2); }
+    .btn-wa     { background:#25D366; color:#fff; }
+    .btn-wa:hover     { background:#1dba57; transform:translateY(-1px); }
+    .btn-lg { padding: 16px 36px; font-size: 15px; border-radius: 12px; }
 
-    .btn-outline {
-      background: transparent; color: var(--text-primary);
-      border: 1px solid var(--border-light);
-    }
-    .btn-outline:hover { background: var(--accent-dim); border-color: rgba(255,255,255,0.25); }
-
-    .btn-whatsapp {
-      background: #25D366; color: #fff;
-    }
-    .btn-whatsapp:hover { background: #1dba57; transform: translateY(-1px); }
-
-    .btn-gold {
-      background: var(--gold); color: #111;
-    }
-    .btn-gold:hover { background: #d9b860; transform: translateY(-1px); }
-
-    /* ─── NAVBAR ─── */
+    /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 20px 0;
-      transition: all 0.3s ease;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      padding: 22px 0; transition: all .3s ease;
     }
-    nav.scrolled {
-      background: rgba(17,18,19,0.95);
-      backdrop-filter: blur(20px);
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
+    nav.stuck {
+      background: rgba(13,14,15,.92); backdrop-filter: blur(24px) saturate(1.5);
+      padding: 14px 0; border-bottom: 1px solid var(--border-0);
     }
-    .nav-inner {
+    .nav-wrap {
       display: flex; align-items: center; justify-content: space-between;
-      max-width: 1180px; margin: 0 auto; padding: 0 24px;
+      max-width: 1160px; margin: 0 auto; padding: 0 28px;
     }
-    .nav-logo img { height: 38px; display: block; }
-    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-logo img { height: 36px; display: block; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
-      font-size: 13px; font-weight: 500; color: var(--text-secondary);
-      text-decoration: none; transition: color 0.2s;
+      font-size: 13px; font-weight: 500; color: var(--text-3);
+      text-decoration: none; transition: color .18s;
     }
-    .nav-links a:hover { color: var(--text-primary); }
-    .nav-cta { display: flex; align-items: center; gap: 12px; }
-    .nav-mobile-btn {
-      display: none; background: none; border: none;
-      color: var(--text-primary); font-size: 20px; cursor: pointer;
-    }
+    .nav-links a:hover { color: var(--text-1); }
+    .nav-right { display: flex; gap: 10px; }
+    .nav-burger { display:none; background:none; border:none; color:var(--text-1); font-size:18px; cursor:pointer; padding:4px; }
 
-    /* ─── HERO ─── */
+    /* ── MOBILE MENU ── */
+    .mmenu {
+      position: fixed; inset: 0; z-index: 800;
+      background: var(--bg-1); padding: 88px 28px 40px;
+      transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .mmenu.open { transform: translateX(0); }
+    .mmenu a {
+      font-size: 22px; font-weight: 700; color: var(--text-2);
+      text-decoration: none; padding: 16px 0; border-bottom: 1px solid var(--border-0);
+      display: block; transition: color .18s;
+    }
+    .mmenu a:hover { color: var(--text-1); }
+    .mmenu-close {
+      position: absolute; top: 18px; right: 22px;
+      background: var(--bg-3); border: 1px solid var(--border-1); color: var(--text-2);
+      width: 38px; height: 38px; border-radius: 10px; cursor: pointer; font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mmenu-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+
+    /* ── HERO ── */
     #hero {
       min-height: 100vh; display: flex; align-items: center;
-      padding: 120px 0 80px;
-      position: relative; overflow: hidden;
+      padding: 130px 0 80px; position: relative; overflow: hidden;
     }
-    .hero-bg {
+    /* noise texture */
+    #hero::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: .4;
+    }
+    /* big glow blob */
+    .hero-glow {
+      position: absolute; pointer-events: none;
+      width: 900px; height: 900px; border-radius: 50%;
+      background: radial-gradient(circle, var(--a-glow) 0%, transparent 65%);
+      top: -200px; right: -200px; filter: blur(60px);
+    }
+    .hero-glow2 {
+      position: absolute; pointer-events: none;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(110,110,255,0.06) 0%, transparent 70%);
+      bottom: -100px; left: -100px; filter: blur(40px);
+    }
+    /* subtle grid */
+    .hero-grid {
       position: absolute; inset: 0; pointer-events: none;
-    }
-    .hero-bg-gradient {
-      position: absolute; top: -30%; right: -10%;
-      width: 700px; height: 700px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
-    }
-    .hero-bg-grid {
-      position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
+        linear-gradient(var(--border-0) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-0) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 90% 70% at 60% 20%, black 10%, transparent 80%);
     }
+
     .hero-inner {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      display: grid; grid-template-columns: 1fr 480px; gap: 64px;
       align-items: center; position: relative; z-index: 1;
     }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
-      border-radius: 100px; padding: 6px 16px; margin-bottom: 24px;
-      font-size: 12px; font-weight: 600; color: var(--gold);
-      letter-spacing: 0.08em; text-transform: uppercase;
-    }
-    .hero-badge i { font-size: 10px; }
-    .hero-title {
-      font-size: clamp(44px, 6vw, 72px);
-      font-weight: 900; letter-spacing: -0.03em; line-height: 1.0;
-      margin-bottom: 20px;
-    }
-    .hero-title .line-accent { color: var(--gold); }
-    .hero-desc {
-      font-size: 17px; color: var(--text-secondary);
-      line-height: 1.75; margin-bottom: 36px; max-width: 480px;
-    }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
-    .hero-stats {
-      display: flex; gap: 32px;
-      padding-top: 32px; border-top: 1px solid var(--border);
-    }
-    .hero-stat-value {
-      font-size: 28px; font-weight: 800; letter-spacing: -0.02em;
-      color: var(--text-primary);
-    }
-    .hero-stat-value span { color: var(--gold); }
-    .hero-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
-    /* Hero right — visual card */
-    .hero-visual { position: relative; }
-    .hero-card-main {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 16px; overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    .hero-eyebrow { margin-bottom: 22px; }
+    .hero-h1 {
+      font-size: clamp(46px, 6.5vw, 76px); font-weight: 900;
+      letter-spacing: -0.03em; line-height: 1.0; margin-bottom: 22px;
     }
-    .hero-card-main img {
-      width: 100%; height: 360px; object-fit: cover; display: block;
-      filter: brightness(0.85);
+    .hero-h1 em { font-style: normal; color: var(--a); }
+    .hero-lead {
+      font-size: 17px; color: var(--text-2); line-height: 1.75;
+      max-width: 460px; margin-bottom: 36px; font-weight: 400;
     }
-    .hero-card-main .card-caption {
-      padding: 20px 24px;
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 52px; }
+    .hero-metrics {
+      display: flex; gap: 0; border: 1px solid var(--border-1); border-radius: 14px;
+      overflow: hidden; background: var(--bg-2);
     }
-    .hero-card-main .card-caption .cap-tag {
-      font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--gold); margin-bottom: 6px;
+    .metric {
+      flex: 1; padding: 20px 24px; border-right: 1px solid var(--border-1);
+      position: relative;
     }
-    .hero-card-main .card-caption h3 {
-      font-size: 16px; font-weight: 700; color: var(--text-primary);
+    .metric:last-child { border-right: none; }
+    .metric-val {
+      font-size: 26px; font-weight: 800; letter-spacing: -0.025em;
+      color: var(--text-1); line-height: 1;
     }
-    .hero-card-float {
-      position: absolute; bottom: 80px; left: -40px;
-      background: var(--bg-secondary); border: 1px solid var(--border-light);
-      border-radius: 12px; padding: 14px 18px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-      display: flex; align-items: center; gap: 12px;
-      min-width: 200px;
+    .metric-val sup { font-size: 16px; color: var(--a); }
+    .metric-lbl { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+
+    /* Hero right side — abstract visual */
+    .hero-right { position: relative; }
+    .hero-card {
+      background: var(--bg-2); border: 1px solid var(--border-1);
+      border-radius: 20px; padding: 28px; position: relative;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px var(--border-0);
     }
-    .float-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: var(--gold-dim); display: flex; align-items: center;
-      justify-content: center; color: var(--gold); font-size: 16px; flex-shrink: 0;
+    .hero-card-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;
     }
-    .float-text-val { font-size: 18px; font-weight: 800; color: var(--text-primary); }
-    .float-text-lbl { font-size: 11px; color: var(--text-muted); }
-    .hero-card-float2 {
-      position: absolute; top: 40px; right: -30px;
-      background: var(--bg-secondary); border: 1px solid var(--border-light);
-      border-radius: 12px; padding: 12px 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    .hero-card-title { font-size: 13px; font-weight: 700; color: var(--text-1); }
+    .live-dot {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 600; color: #4ade80;
+    }
+    .live-dot::before {
+      content:''; width:7px; height:7px; border-radius:50%; background:#4ade80;
+      animation: blink 1.8s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .dir-list { display: flex; flex-direction: column; gap: 10px; }
+    .dir-item {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--bg-3); border: 1px solid var(--border-0);
+      border-radius: 12px; padding: 14px 16px;
+      transition: border-color .2s, background .2s;
+      cursor: default;
+    }
+    .dir-item:hover { border-color: var(--a-border); background: var(--bg-4); }
+    .dir-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--a-soft); border: 1px solid var(--a-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--a); font-size: 15px; flex-shrink: 0;
+    }
+    .dir-name { font-size: 13px; font-weight: 600; color: var(--text-1); }
+    .dir-sub  { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+    .dir-arrow { margin-left: auto; color: var(--text-3); font-size: 11px; }
+
+    /* float badges */
+    .badge-float {
+      position: absolute; background: var(--bg-1); border: 1px solid var(--border-2);
+      border-radius: 12px; padding: 12px 16px; box-shadow: 0 16px 40px rgba(0,0,0,.5);
       display: flex; align-items: center; gap: 10px;
     }
-    .dot-green { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .float2-text { font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+    .bf-left  { left: -52px; bottom: 64px; }
+    .bf-top   { right: -36px; top: 28px; }
+    .bf-icon  { font-size: 18px; color: var(--a); }
+    .bf-val   { font-size: 16px; font-weight: 800; color: var(--text-1); line-height: 1; }
+    .bf-lbl   { font-size: 10px; color: var(--text-3); }
 
-    /* ─── ABOUT / APPROACH ─── */
-    #about { background: var(--bg-secondary); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      align-items: center;
-    }
-    .about-images {
-      position: relative; height: 520px;
-    }
-    .about-img-main {
-      position: absolute; top: 0; left: 0; right: 60px; bottom: 60px;
-      border-radius: 16px; overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .about-img-main img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(0.8);
-    }
-    .about-img-secondary {
-      position: absolute; bottom: 0; right: 0;
-      width: 55%; height: 55%;
-      border-radius: 12px; overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    }
-    .about-img-secondary img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
-    .about-img-label {
-      position: absolute; bottom: -30px; left: 0;
-      background: var(--gold); color: #111;
-      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-      padding: 6px 16px; border-radius: 6px;
-    }
-    .about-content .tag { margin-bottom: 20px; }
-    .about-pillars {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px;
-    }
-    .pillar {
-      background: var(--bg-primary); border: 1px solid var(--border);
-      border-radius: 12px; padding: 18px;
-      transition: border-color 0.2s;
-    }
-    .pillar:hover { border-color: var(--border-light); }
-    .pillar-icon { font-size: 18px; color: var(--gold); margin-bottom: 10px; }
-    .pillar-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
-    .pillar-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    /* ── ABOUT ── */
+    #about { background: var(--bg-1); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 
-    /* ─── ECOSYSTEM ─── */
-    #ecosystem { }
-    .eco-header { text-align: center; margin-bottom: 60px; }
-    .eco-header .section-subtitle { margin: 0 auto; }
-    .eco-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    /* story block — text-only, corporate */
+    .story-wrap {
+      background: var(--bg-2); border: 1px solid var(--border-1);
+      border-radius: 20px; padding: 40px; position: relative; overflow: hidden;
     }
-    .eco-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 28px;
-      transition: all 0.25s ease; position: relative; overflow: hidden;
+    .story-wrap::after {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, var(--a) 0%, transparent 80%);
     }
-    .eco-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: transparent; transition: background 0.25s;
+    .story-quote {
+      font-size: 32px; font-weight: 900; letter-spacing: -0.02em; color: var(--a);
+      line-height: 1; margin-bottom: 20px; opacity: .25; font-style: italic;
     }
-    .eco-card:hover { border-color: var(--border-light); background: var(--bg-card-hover); }
-    .eco-card:hover::before { background: linear-gradient(90deg, var(--gold), transparent); }
-    .eco-card-num {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-      color: var(--text-muted); margin-bottom: 16px;
+    .story-text {
+      font-size: 15px; color: var(--text-2); line-height: 1.8;
+      margin-bottom: 16px;
     }
-    .eco-card-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
+    .story-text:last-of-type { margin-bottom: 28px; }
+    .story-sign {
+      display: flex; align-items: center; gap: 12px;
+      padding-top: 24px; border-top: 1px solid var(--border-0);
+    }
+    .sign-av {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--a-soft); border: 1px solid var(--a-border);
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px; color: var(--gold); margin-bottom: 16px;
+      font-size: 16px; color: var(--a); font-weight: 800;
     }
-    .eco-card-title {
-      font-size: 17px; font-weight: 700; color: var(--text-primary);
-      margin-bottom: 10px; line-height: 1.3;
+    .sign-name { font-size: 13px; font-weight: 700; color: var(--text-1); }
+    .sign-role { font-size: 11px; color: var(--text-3); }
+
+    .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+    .pillar {
+      background: var(--bg-2); border: 1px solid var(--border-0);
+      border-radius: 14px; padding: 20px; transition: all .2s;
     }
-    .eco-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
-    .eco-card-tag {
-      display: inline-block; margin-top: 16px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-      color: var(--gold); background: var(--gold-dim);
+    .pillar:hover { border-color: var(--a-border); background: var(--bg-3); }
+    .p-icon { font-size: 18px; color: var(--a); margin-bottom: 10px; }
+    .p-name { font-size: 13px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; }
+    .p-desc { font-size: 12px; color: var(--text-3); line-height: 1.55; }
+
+    /* ── ECOSYSTEM ── */
+    #eco { background: var(--bg); }
+    .eco-head { text-align: center; margin-bottom: 56px; }
+    .eco-head .sec-sub { margin: 10px auto 0; }
+
+    .eco-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+
+    .eco-card {
+      background: var(--bg-2); border: 1px solid var(--border-0);
+      border-radius: 16px; padding: 28px 26px;
+      transition: all .25s ease; position: relative; overflow: hidden;
+    }
+    .eco-card::after {
+      content:''; position:absolute; inset:0; border-radius:16px;
+      background: linear-gradient(135deg, var(--a-soft) 0%, transparent 60%);
+      opacity:0; transition: opacity .25s;
+    }
+    .eco-card:hover { border-color: var(--a-border); transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+    .eco-card:hover::after { opacity: 1; }
+    .eco-card > * { position: relative; z-index: 1; }
+
+    .eco-n {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      color: var(--a); margin-bottom: 18px; opacity: .7;
+    }
+    .eco-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--a-soft); border: 1px solid var(--a-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 19px; color: var(--a); margin-bottom: 16px;
+    }
+    .eco-name { font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: 10px; line-height: 1.3; }
+    .eco-desc { font-size: 13px; color: var(--text-3); line-height: 1.65; }
+    .eco-tag {
+      display: inline-block; margin-top: 18px;
+      font-size: 11px; font-weight: 600; letter-spacing: .06em;
+      color: var(--a); background: var(--a-soft); border: 1px solid var(--a-border);
       padding: 4px 10px; border-radius: 100px;
     }
-
-    /* ─── STATS ─── */
-    #stats {
-      background: var(--bg-secondary);
-      padding: 64px 0;
-    }
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
-    }
-    .stat-item {
-      padding: 40px 32px; text-align: center;
-      border-right: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-item:hover { background: var(--bg-card); }
-    .stat-number {
-      font-size: 48px; font-weight: 900; letter-spacing: -0.03em;
-      color: var(--text-primary); line-height: 1;
-    }
-    .stat-number .stat-plus { color: var(--gold); }
-    .stat-label {
-      font-size: 13px; color: var(--text-muted); margin-top: 8px; line-height: 1.4;
+    .eco-card.highlight {
+      background: linear-gradient(135deg, rgba(110,110,255,0.1) 0%, var(--bg-2) 100%);
+      border-color: var(--a-border);
     }
 
-    /* ─── APP ─── */
-    #app-section {
-      background: var(--bg-primary);
+    /* ── STATS ── */
+    #stats { background: var(--bg-1); padding: 72px 0; }
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border: 1px solid var(--border-1); border-radius: 18px; overflow: hidden;
     }
-    .app-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      align-items: center;
-    }
-    .app-mockup {
-      position: relative; display: flex; justify-content: center; align-items: center;
-    }
-    .app-phone-wrap {
-      position: relative; width: 260px;
-    }
-    .app-phone-bg {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
-    }
-    .app-phone {
-      position: relative; z-index: 1;
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 36px; overflow: hidden;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-      width: 100%;
-    }
-    .app-phone-header {
-      background: var(--bg-secondary); padding: 18px 20px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .app-phone-notch {
-      width: 80px; height: 4px; background: var(--border-light);
-      border-radius: 2px; margin: 0 auto 14px;
-    }
-    .app-phone-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
-    .app-phone-sub { font-size: 11px; color: var(--text-muted); }
-    .app-phone-body { padding: 16px; }
-    .app-course-item {
-      background: var(--bg-secondary); border: 1px solid var(--border);
-      border-radius: 10px; padding: 14px; margin-bottom: 10px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .app-course-icon {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: var(--gold-dim); display: flex; align-items: center;
-      justify-content: center; font-size: 14px; color: var(--gold); flex-shrink: 0;
-    }
-    .app-course-name { font-size: 11px; font-weight: 700; color: var(--text-primary); }
-    .app-course-progress-bar {
-      width: 100%; height: 3px; background: var(--border); border-radius: 2px; margin-top: 5px;
-    }
-    .app-course-progress-fill {
-      height: 100%; background: var(--gold); border-radius: 2px;
-    }
-    .app-phone-float {
-      position: absolute; bottom: 40px; right: -50px;
-      background: var(--bg-secondary); border: 1px solid var(--border-light);
-      border-radius: 12px; padding: 12px 16px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .app-float-icon { font-size: 18px; color: var(--gold); }
-    .app-float-val { font-size: 15px; font-weight: 800; color: var(--text-primary); }
-    .app-float-lbl { font-size: 10px; color: var(--text-muted); }
-
-    .app-content { }
-    .app-features { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
-    .app-feature {
-      display: flex; align-items: flex-start; gap: 16px;
-      padding: 16px; background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 12px; transition: border-color 0.2s;
-    }
-    .app-feature:hover { border-color: var(--border-light); }
-    .app-feature-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: var(--gold-dim); display: flex; align-items: center;
-      justify-content: center; color: var(--gold); font-size: 16px; flex-shrink: 0;
-    }
-    .app-feature-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
-    .app-feature-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-    .app-download-btns { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
-    .btn-store {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--bg-card); border: 1px solid var(--border-light);
-      color: var(--text-primary); text-decoration: none;
-      padding: 12px 20px; border-radius: 10px;
-      transition: all 0.2s; cursor: pointer;
-    }
-    .btn-store:hover { background: var(--bg-card-hover); border-color: rgba(255,255,255,0.2); }
-    .btn-store i { font-size: 22px; }
-    .btn-store-text { }
-    .btn-store-sub { font-size: 10px; color: var(--text-muted); line-height: 1; }
-    .btn-store-name { font-size: 14px; font-weight: 700; line-height: 1.3; }
-
-    /* ─── CTA SECTION ─── */
-    #cta {
-      background: var(--bg-secondary);
-    }
-    .cta-inner {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 24px; padding: 64px 80px;
-      display: grid; grid-template-columns: 1fr auto; gap: 40px;
-      align-items: center;
+    .sitem {
+      padding: 44px 32px; text-align: center;
+      border-right: 1px solid var(--border-1); transition: background .2s;
       position: relative; overflow: hidden;
     }
-    .cta-inner::before {
-      content: ''; position: absolute; top: -50%; right: -10%;
-      width: 500px; height: 500px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
-      pointer-events: none;
+    .sitem:last-child { border-right: none; }
+    .sitem:hover { background: var(--bg-3); }
+    .sitem::before {
+      content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+      width:40px; height:2px; background: var(--a); border-radius:0 0 2px 2px;
     }
-    .cta-title {
-      font-size: clamp(28px, 4vw, 44px); font-weight: 800;
-      letter-spacing: -0.02em; margin-bottom: 12px;
+    .sval {
+      font-size: 50px; font-weight: 900; letter-spacing: -0.03em;
+      color: var(--text-1); line-height: 1;
     }
-    .cta-sub { font-size: 15px; color: var(--text-secondary); max-width: 460px; }
-    .cta-actions { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+    .sval sup { font-size: 22px; color: var(--a); vertical-align: top; padding-top: 10px; }
+    .slbl { font-size: 13px; color: var(--text-3); margin-top: 10px; line-height: 1.4; }
 
-    /* ─── FORM MODAL ─── */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 9000;
-      background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    }
-    .modal-overlay.active { opacity: 1; pointer-events: all; }
-    .modal-box {
-      background: var(--bg-secondary); border: 1px solid var(--border-light);
-      border-radius: 20px; padding: 40px; width: 100%; max-width: 480px;
-      position: relative; transform: translateY(20px); transition: transform 0.3s;
-    }
-    .modal-overlay.active .modal-box { transform: translateY(0); }
-    .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-muted); width: 32px; height: 32px;
-      border-radius: 8px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; transition: all 0.2s;
-    }
-    .modal-close:hover { color: var(--text-primary); border-color: var(--border-light); }
-    .modal-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
-    .modal-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 28px; }
-    .form-group { margin-bottom: 16px; }
-    .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
-    .form-input {
-      width: 100%; background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-primary); font-family: inherit; font-size: 14px;
-      padding: 12px 16px; border-radius: 8px; outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-input:focus { border-color: var(--border-light); }
-    .form-input::placeholder { color: var(--text-muted); }
-    .form-select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L1 4h14z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 14px center;
-    }
-    .form-success {
-      text-align: center; padding: 20px 0;
-    }
-    .form-success-icon { font-size: 48px; color: var(--gold); margin-bottom: 12px; }
-    .form-success-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
-    .form-success-sub { font-size: 14px; color: var(--text-secondary); }
+    /* ── APP ── */
+    #app-section { background: var(--bg); }
+    .app-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 
-    /* ─── FOOTER ─── */
+    /* phone mockup */
+    .phone-wrap { position: relative; display: flex; justify-content: center; }
+    .phone-glow {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 360px; height: 360px; border-radius: 50%;
+      background: radial-gradient(circle, var(--a-glow) 0%, transparent 70%); pointer-events: none;
+    }
+    .phone {
+      position: relative; z-index: 1; width: 256px;
+      background: var(--bg-2); border: 1px solid var(--border-1);
+      border-radius: 40px; overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,.7);
+    }
+    .phone-bar {
+      background: var(--bg-3); padding: 20px 20px 14px;
+      border-bottom: 1px solid var(--border-0);
+    }
+    .phone-notch {
+      width: 72px; height: 4px; background: var(--border-2);
+      border-radius: 2px; margin: 0 auto 14px;
+    }
+    .phone-bar-title { font-size: 13px; font-weight: 700; }
+    .phone-bar-sub   { font-size: 10px; color: var(--text-3); margin-top: 1px; }
+    .phone-body { padding: 14px; }
+    .pcourse {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg-3); border: 1px solid var(--border-0);
+      border-radius: 10px; padding: 12px; margin-bottom: 8px;
+    }
+    .pcourse-ico {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--a-soft); display: flex; align-items: center;
+      justify-content: center; color: var(--a); font-size: 13px; flex-shrink:0;
+    }
+    .pcourse-name { font-size: 11px; font-weight: 700; color: var(--text-1); margin-bottom: 5px; }
+    .pbar { height: 3px; background: var(--border-1); border-radius: 2px; }
+    .pbar-fill { height: 100%; background: var(--a); border-radius: 2px; }
+    .phone-float {
+      position: absolute; right: -44px; bottom: 48px;
+      background: var(--bg-1); border: 1px solid var(--border-2);
+      border-radius: 12px; padding: 12px 16px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.5);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pf-icon { font-size: 17px; color: var(--a); }
+    .pf-val  { font-size: 15px; font-weight: 800; line-height: 1; }
+    .pf-lbl  { font-size: 10px; color: var(--text-3); }
+
+    .app-features { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+    .afeat {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--bg-2); border: 1px solid var(--border-0);
+      border-radius: 14px; padding: 18px; transition: border-color .2s;
+    }
+    .afeat:hover { border-color: var(--a-border); }
+    .afeat-ico {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--a-soft); display: flex; align-items: center;
+      justify-content: center; color: var(--a); font-size: 16px; flex-shrink:0;
+    }
+    .afeat-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .afeat-desc  { font-size: 12px; color: var(--text-3); line-height: 1.55; }
+
+    .store-btns { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+    .sbtn {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg-2); border: 1px solid var(--border-1);
+      color: var(--text-1); text-decoration: none;
+      padding: 12px 20px; border-radius: 12px;
+      transition: all .2s; cursor: pointer; font-family: inherit;
+    }
+    .sbtn:hover { background: var(--bg-4); border-color: var(--border-2); transform: translateY(-1px); }
+    .sbtn i { font-size: 21px; }
+    .sbtn-sub  { font-size: 10px; color: var(--text-3); line-height: 1; }
+    .sbtn-name { font-size: 13px; font-weight: 700; line-height: 1.3; }
+
+    /* ── CTA ── */
+    #cta { background: var(--bg-1); }
+    .cta-box {
+      border: 1px solid var(--a-border); border-radius: 24px;
+      padding: 72px 80px; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, rgba(110,110,255,0.06) 0%, var(--bg-2) 50%);
+    }
+    .cta-box::before {
+      content:''; position:absolute; top:-60%; right:-5%;
+      width:600px; height:600px; border-radius:50%;
+      background:radial-gradient(circle, var(--a-glow) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .cta-inner { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; position: relative; z-index:1; }
+    .cta-title { font-size: clamp(26px,3.8vw,42px); font-weight: 800; letter-spacing: -0.025em; margin-bottom: 10px; }
+    .cta-sub   { font-size: 15px; color: var(--text-2); max-width: 440px; line-height: 1.7; }
+    .cta-acts  { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+
+    /* ── FOOTER ── */
     footer {
-      background: var(--bg-primary); border-top: 1px solid var(--border);
-      padding: 48px 0 32px;
+      background: var(--bg); border-top: 1px solid var(--border-0);
+      padding: 52px 0 32px;
     }
-    .footer-inner {
-      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px;
-      margin-bottom: 40px;
+    .footer-grid {
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px;
+      margin-bottom: 44px;
     }
-    .footer-brand img { height: 32px; margin-bottom: 16px; }
-    .footer-brand p { font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 240px; }
-    .footer-col-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 14px; }
-    .footer-links { list-style: none; }
-    .footer-links li { margin-bottom: 8px; }
-    .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text-primary); }
-    .footer-bottom {
-      border-top: 1px solid var(--border); padding-top: 24px;
+    .footer-brand img { height: 30px; margin-bottom: 14px; display: block; }
+    .footer-brand p { font-size: 13px; color: var(--text-3); line-height: 1.65; max-width: 220px; }
+    .fcol-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); margin-bottom: 14px; }
+    .flinks { list-style: none; }
+    .flinks li { margin-bottom: 9px; }
+    .flinks a { font-size: 13px; color: var(--text-3); text-decoration: none; transition: color .18s; }
+    .flinks a:hover { color: var(--text-1); }
+    .footer-bot {
+      border-top: 1px solid var(--border-0); padding-top: 24px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .footer-copyright { font-size: 12px; color: var(--text-muted); }
-    .footer-socials { display: flex; gap: 10px; }
-    .social-btn {
-      width: 34px; height: 34px; border-radius: 8px;
-      background: var(--bg-card); border: 1px solid var(--border);
+    .footer-copy { font-size: 12px; color: var(--text-3); }
+    .socials { display: flex; gap: 8px; }
+    .soc-btn {
+      width: 34px; height: 34px; border-radius: 9px;
+      background: var(--bg-2); border: 1px solid var(--border-0);
       display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted); font-size: 13px; text-decoration: none;
-      transition: all 0.2s;
+      color: var(--text-3); font-size: 13px; text-decoration: none;
+      transition: all .2s;
     }
-    .social-btn:hover { color: var(--text-primary); border-color: var(--border-light); background: var(--bg-card-hover); }
+    .soc-btn:hover { background: var(--bg-4); color: var(--text-1); border-color: var(--border-2); }
 
-    /* ─── DIVIDER ─── */
-    .divider { width: 48px; height: 3px; background: var(--gold); border-radius: 2px; margin: 20px 0 28px; }
+    /* ── MODAL ── */
+    .overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,.82); backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .28s;
+      padding: 20px;
+    }
+    .overlay.on { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--bg-2); border: 1px solid var(--border-2);
+      border-radius: 22px; padding: 40px; width: 100%; max-width: 460px;
+      position: relative; transform: translateY(18px); transition: transform .28s;
+    }
+    .overlay.on .modal { transform: translateY(0); }
+    .modal-x {
+      position: absolute; top: 14px; right: 14px;
+      background: var(--bg-3); border: 1px solid var(--border-1);
+      color: var(--text-3); width: 32px; height: 32px; border-radius: 8px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; transition: all .18s;
+    }
+    .modal-x:hover { color: var(--text-1); border-color: var(--border-2); }
+    .modal-h { font-size: 22px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 5px; }
+    .modal-s { font-size: 13px; color: var(--text-2); margin-bottom: 26px; }
+    .fg { margin-bottom: 14px; }
+    .fl { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); margin-bottom: 5px; }
+    .fi {
+      width: 100%; background: var(--bg-3); border: 1px solid var(--border-1);
+      color: var(--text-1); font-family: inherit; font-size: 14px;
+      padding: 12px 15px; border-radius: 9px; outline: none; transition: border-color .2s;
+    }
+    .fi:focus { border-color: var(--a); }
+    .fi::placeholder { color: var(--text-3); }
+    .fi.fsel {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L1 4h14z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 13px center;
+    }
+    .fsuccess { text-align: center; padding: 16px 0; }
+    .fsuccess-ic { font-size: 44px; color: var(--a); margin-bottom: 12px; }
+    .fsuccess-h { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .fsuccess-s { font-size: 13px; color: var(--text-2); line-height: 1.6; }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 1024px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero-visual { display: none; }
-      .hero-title { font-size: 52px; }
+    /* ── ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1080px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
       .about-grid { grid-template-columns: 1fr; }
-      .about-images { height: 360px; }
-      .eco-grid { grid-template-columns: repeat(2, 1fr); }
+      .eco-grid { grid-template-columns: repeat(2,1fr); }
       .app-grid { grid-template-columns: 1fr; }
-      .app-mockup { display: none; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .stats-grid .stat-item:nth-child(2) { border-right: none; }
-      .stats-grid .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
-      .stats-grid .stat-item:last-child { border-top: 1px solid var(--border); }
-      .cta-inner { grid-template-columns: 1fr; padding: 40px; }
-      .cta-actions { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
-      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .phone-wrap { display: none; }
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+      .stats-row .sitem:nth-child(2) { border-right: none; }
+      .stats-row .sitem:nth-child(3) { border-top: 1px solid var(--border-1); }
+      .stats-row .sitem:last-child   { border-top: 1px solid var(--border-1); }
+      .cta-inner { grid-template-columns: 1fr; }
+      .cta-acts { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+      .cta-box { padding: 48px 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 768px) {
-      section { padding: 64px 0; }
-      .nav-links, .nav-cta { display: none; }
-      .nav-mobile-btn { display: block; }
-      .hero-title { font-size: 38px; }
+    @media (max-width: 720px) {
+      section { padding: 68px 0; }
+      .nav-links, .nav-right { display: none; }
+      .nav-burger { display: block; }
+      .hero-h1 { font-size: 40px; }
+      .hero-metrics { flex-direction: column; }
+      .hero-metrics .metric { border-right: none; border-bottom: 1px solid var(--border-1); }
+      .hero-metrics .metric:last-child { border-bottom: none; }
       .eco-grid { grid-template-columns: 1fr; }
-      .about-pillars { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .cta-inner { padding: 32px 24px; }
-      .footer-inner { grid-template-columns: 1fr; }
+      .pillars { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .cta-box { padding: 36px 24px; }
+      .cta-acts { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; }
     }
-
-    /* ─── ANIMATIONS ─── */
-    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-    /* ─── MOBILE MENU ─── */
-    .mobile-menu {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 999;
-      background: var(--bg-primary); padding: 80px 24px 40px;
-      transform: translateX(100%); transition: transform 0.35s ease;
-      display: flex; flex-direction: column; gap: 24px;
-    }
-    .mobile-menu.open { transform: translateX(0); }
-    .mobile-menu a {
-      font-size: 20px; font-weight: 700; color: var(--text-secondary);
-      text-decoration: none; padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .mobile-menu a:hover { color: var(--text-primary); }
-    .mobile-menu-close {
-      position: absolute; top: 20px; right: 20px;
-      background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-primary); width: 40px; height: 40px;
-      border-radius: 10px; cursor: pointer; font-size: 18px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .mobile-menu-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
   </style>
 </head>
 <body>
 
-<!-- ─── NAVBAR ─── -->
-<nav id="navbar">
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <img src="/static/logo1.png" alt="GTH Academy" />
-    </a>
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-wrap">
+    <a href="/" class="nav-logo"><img src="/static/logo1.png" alt="GTH Academy" /></a>
     <ul class="nav-links">
       <li><a href="#about">Մեր մոտեցումը</a></li>
-      <li><a href="#ecosystem">Ուղղությունները</a></li>
+      <li><a href="#eco">Ուղղություններ</a></li>
       <li><a href="#app-section">Հավելված</a></li>
       <li><a href="#stats">Արդյունքներ</a></li>
     </ul>
-    <div class="nav-cta">
-      <a href="https://wa.me/37498000000" target="_blank" class="btn btn-outline" style="padding:10px 18px;font-size:13px;">
+    <div class="nav-right">
+      <a href="https://wa.me/37498000000" target="_blank" class="btn btn-ghost" style="padding:10px 18px;font-size:13px;">
         <i class="fab fa-whatsapp"></i> WhatsApp
       </a>
-      <button class="btn btn-primary" style="padding:10px 18px;font-size:13px;" onclick="openModal()">
+      <button class="btn btn-accent" style="padding:10px 18px;font-size:13px;" onclick="openModal()">
         Թողնել հայտ
       </button>
     </div>
-    <button class="nav-mobile-btn" onclick="openMobileMenu()" aria-label="Բացել ցանկը">
-      <i class="fas fa-bars"></i>
-    </button>
+    <button class="nav-burger" onclick="openMenu()" aria-label="menu"><i class="fas fa-bars"></i></button>
   </div>
 </nav>
 
-<!-- ─── MOBILE MENU ─── -->
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-menu-close" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
-  <a href="#about" onclick="closeMobileMenu()">Մեր մոտեցումը</a>
-  <a href="#ecosystem" onclick="closeMobileMenu()">Ուղղությունները</a>
-  <a href="#app-section" onclick="closeMobileMenu()">Հավելված</a>
-  <a href="#stats" onclick="closeMobileMenu()">Արդյունքներ</a>
-  <div class="mobile-menu-btns">
-    <a href="https://wa.me/37498000000" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Գրել WhatsApp-ում</a>
-    <button class="btn btn-primary" onclick="closeMobileMenu();openModal()">Թողնել հայտ</button>
+<!-- MOBILE MENU -->
+<div class="mmenu" id="mmenu">
+  <button class="mmenu-close" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+  <a href="#about" onclick="closeMenu()">Մեր մոտեցումը</a>
+  <a href="#eco" onclick="closeMenu()">Ուղղություններ</a>
+  <a href="#app-section" onclick="closeMenu()">Հավելված</a>
+  <a href="#stats" onclick="closeMenu()">Արդյունքներ</a>
+  <div class="mmenu-btns">
+    <a href="https://wa.me/37498000000" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Գրել WhatsApp-ում</a>
+    <button class="btn btn-accent" onclick="closeMenu();openModal()">Թողնել հայտ</button>
   </div>
 </div>
 
-<!-- ─── HERO ─── -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-bg">
-    <div class="hero-bg-gradient"></div>
-    <div class="hero-bg-grid"></div>
-  </div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-grid"></div>
   <div class="container">
     <div class="hero-inner">
-      <div class="hero-left fade-in">
-        <div class="hero-badge">
-          <i class="fas fa-graduation-cap"></i>
-          Բիզնես Կրթական Հարթակ
+      <div class="reveal">
+        <div class="hero-eyebrow">
+          <span class="label"><i class="fas fa-graduation-cap"></i> Բիզնես Կրթական Հարթակ</span>
         </div>
-        <h1 class="hero-title">
+        <h1 class="hero-h1">
           Կառուցիր<br/>
-          <span class="line-accent">Բիզնես</span><br/>
+          <em>Բիզնեսի</em><br/>
           Համակարգ
         </h1>
-        <p class="hero-desc">
-          GTH Academy-ն կրթական հարթակ է, որտեղ ոչ միայն սովորում ես, այլ կառուցում ես
-          քո բիզնես համակարգը: Ստանում ես գործնական գիտելիք, ճիշտ կառուցվածք և ամբողջ
-          ճանապարհն ի մի էկոհամակարգ:
+        <p class="hero-lead">
+          GTH Academy-ն կրթական հարթակ է, որտեղ ոչ միայն սովորում ես, այլ
+          կառուցում ես ճիշտ բիզնես համակարգ — sourcing-ից մինչև վաճառք:
         </p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" onclick="openModal()">
-            <i class="fas fa-arrow-right"></i> Թողնել հայտ
+        <div class="hero-cta">
+          <button class="btn btn-white btn-lg" onclick="openModal()">
+            Թողնել հայտ <i class="fas fa-arrow-right"></i>
           </button>
-          <a href="https://wa.me/37498000000" target="_blank" class="btn btn-whatsapp">
-            <i class="fab fa-whatsapp"></i> Գրել WhatsApp-ում
+          <a href="https://wa.me/37498000000" target="_blank" class="btn btn-wa btn-lg">
+            <i class="fab fa-whatsapp"></i> WhatsApp
           </a>
         </div>
-        <div class="hero-stats">
-          <div>
-            <div class="hero-stat-value">3200<span>+</span></div>
-            <div class="hero-stat-label">Ուսանող</div>
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-val" id="m1">0<sup>+</sup></div>
+            <div class="metric-lbl">Ուսանող</div>
           </div>
-          <div>
-            <div class="hero-stat-value">150<span>+</span></div>
-            <div class="hero-stat-label">Ծրագրեր</div>
+          <div class="metric">
+            <div class="metric-val" id="m2">0<sup>+</sup></div>
+            <div class="metric-lbl">Ծրագրեր</div>
           </div>
-          <div>
-            <div class="hero-stat-value">5<span>+</span></div>
-            <div class="hero-stat-label">Ուղղություններ</div>
+          <div class="metric">
+            <div class="metric-val" id="m3">0</div>
+            <div class="metric-lbl">Ուղղություն</div>
           </div>
         </div>
       </div>
 
-      <div class="hero-visual fade-in" style="transition-delay:0.15s">
-        <div class="hero-card-main">
-          <img src="/static/photo2.jpg" alt="GTH Academy workshop" />
-          <div class="card-caption">
-            <div class="cap-tag">Live Session</div>
-            <h3>Բիզնես Կառուցման Ինտենսիվ</h3>
+      <div class="hero-right reveal" style="transition-delay:.12s">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-title">GTH Academy — Platform</div>
+            <div class="live-dot">Live հիմա</div>
+          </div>
+          <div class="dir-list">
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-graduation-cap"></i></div>
+              <div><div class="dir-name">Բիզնես Կրթություն</div><div class="dir-sub">Ծրագրեր, ակադեմիա</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-truck"></i></div>
+              <div><div class="dir-name">Լոգիստիկա</div><div class="dir-sub">Fulfillment, delivery</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-search-dollar"></i></div>
+              <div><div class="dir-name">Sourcing</div><div class="dir-sub">Չինաստան, մատակարարներ</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-chart-bar"></i></div>
+              <div><div class="dir-name">Ապրանքի Վերլուծություն</div><div class="dir-sub">Margin, demand, competitors</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-handshake"></i></div>
+              <div><div class="dir-name">Խորհրդատվություն</div><div class="dir-sub">Անհատական աջակցություն</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
           </div>
         </div>
-        <div class="hero-card-float">
-          <div class="float-icon"><i class="fas fa-users"></i></div>
+        <div class="badge-float bf-left">
+          <div class="bf-icon"><i class="fas fa-users"></i></div>
           <div>
-            <div class="float-text-val">3,200+</div>
-            <div class="float-text-lbl">Ակտիվ ուսանող</div>
+            <div class="bf-val">3 200<sup style="font-size:11px;color:var(--a)">+</sup></div>
+            <div class="bf-lbl">Ուսանող</div>
           </div>
         </div>
-        <div class="hero-card-float2">
-          <div class="dot-green"></div>
-          <div class="float2-text">Live Դասընթաց Հիմա</div>
+        <div class="badge-float bf-top">
+          <div class="bf-icon"><i class="fas fa-check-circle"></i></div>
+          <div>
+            <div class="bf-val">150<sup style="font-size:11px;color:var(--a)">+</sup></div>
+            <div class="bf-lbl">Ծրագիր</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── ABOUT ─── -->
+<!-- ABOUT -->
 <section id="about">
   <div class="container">
     <div class="about-grid">
-      <div class="about-images fade-in">
-        <div class="about-img-main">
-          <img src="/static/photo3.jpg" alt="GTH Academy session" />
-          <div class="about-img-label">Live Sessionner</div>
-        </div>
-        <div class="about-img-secondary">
-          <img src="/static/photo1.jpg" alt="GTH Academy team" />
+      <div class="story-wrap reveal">
+        <div class="story-quote">"</div>
+        <p class="story-text">
+          GTH Academy-ն ձևավորվել է ոչ թե դասախոսական, այլ գործնական բիզնես
+          փորձի հիմքի վրա: Մենք ամբողջ ճանապարհն անցել ենք ինքներս՝
+          sourcing-ից, logistic-ից, marketplace-ներից մինչև համակարգի
+          կառուցում և մասշտաբ:
+        </p>
+        <p class="story-text">
+          Այս փորձն այժմ ձևավորում է ամեն ծրագրի, ամեն module-ի հիմքը:
+          Մենք չենք սովորեցնում տեսություն — մենք փոխանցում ենք գործող
+          համակարգ, որն արդեն ապացուցված է:
+        </p>
+        <div class="story-sign">
+          <div class="sign-av">G</div>
+          <div>
+            <div class="sign-name">GTH Academy Team</div>
+            <div class="sign-role">Բիզնես Կրթական Հարթակ</div>
+          </div>
         </div>
       </div>
-      <div class="about-content fade-in" style="transition-delay:0.15s">
-        <div class="tag"><span></span> Մեր Մոտեցումը</div>
-        <h2 class="section-title">Ոչ թե Դաս — Այլ Համակարգ</h2>
-        <div class="divider"></div>
-        <p class="section-subtitle" style="max-width:100%">
-          GTH Academy-ն ձևավորվել է իրական բիզնես պրակտիկայի հիմքի վրա: Մենք անցել ենք
-          ամբողջ ճանապարհը՝ sourcing-ից մինչև fulfillment, վաճառք և մասշտաբ: Այս փորձը
-          ձևավորում է ամեն ծրագրի հիմքը:
+
+      <div class="reveal" style="transition-delay:.1s">
+        <div class="chip" style="margin-bottom:20px"><span class="chip-dot"></span> Մեր Մոտեցումը</div>
+        <h2 class="sec-title">Ոչ թե Դաս —<br/>Այլ Համակարգ</h2>
+        <div class="rule"></div>
+        <p class="sec-sub" style="max-width:100%">
+          Այստեղ ոչ թե ուսումնասիրում ես բիզնեսի մասին — կառուցում ես
+          քոնը: Ճիշտ գործիքներ, ճիշտ կառուցվածք, ճիշտ ուղղություն:
         </p>
-        <div class="about-pillars">
+        <div class="pillars">
           <div class="pillar">
-            <div class="pillar-icon"><i class="fas fa-layer-group"></i></div>
-            <div class="pillar-title">Համակարգային Մոտեցում</div>
-            <div class="pillar-desc">Կառուցում ենք ամբողջ բիզնես համակարգ, ոչ թե առանձին հմտություններ</div>
+            <div class="p-icon"><i class="fas fa-layer-group"></i></div>
+            <div class="p-name">Համակարգ</div>
+            <div class="p-desc">Ամբողջ բիզնես կառուցվածք, ոչ թե առանձին հմտություններ</div>
           </div>
           <div class="pillar">
-            <div class="pillar-icon"><i class="fas fa-briefcase"></i></div>
-            <div class="pillar-title">Պրակտիկ Գիտելիք</div>
-            <div class="pillar-desc">Ամեն բան, ինչ ասում ենք, անցել ենք ինքներս աշխատանքում</div>
+            <div class="p-icon"><i class="fas fa-wrench"></i></div>
+            <div class="p-name">Պրակտիկ</div>
+            <div class="p-desc">Ամեն ինչ, ինչ ասում ենք — անցել ենք ինքներս</div>
           </div>
           <div class="pillar">
-            <div class="pillar-icon"><i class="fas fa-users-cog"></i></div>
-            <div class="pillar-title">Ամբողջ Էկոհամակարգ</div>
-            <div class="pillar-desc">Logistic, sourcing, analysis — ամեն ինչ մի կտուրի տակ</div>
+            <div class="p-icon"><i class="fas fa-network-wired"></i></div>
+            <div class="p-name">Էկոհամակարգ</div>
+            <div class="p-desc">Logistics, sourcing, analytics — ամեն ինչ մի կտուրի տակ</div>
           </div>
           <div class="pillar">
-            <div class="pillar-icon"><i class="fas fa-chart-line"></i></div>
-            <div class="pillar-title">Արդյունքի Ուղղված</div>
-            <div class="pillar-desc">Նպատակը ոչ թե դասընթաց ավարտելն է, այլ վաճառք անելը</div>
+            <div class="p-icon"><i class="fas fa-bullseye"></i></div>
+            <div class="p-name">Արդյունք</div>
+            <div class="p-desc">Նպատակ — ոչ թե certificate, այլ աշխատող բիզնես</div>
           </div>
         </div>
       </div>
@@ -775,59 +790,59 @@ app.get('/', (c) => {
   </div>
 </section>
 
-<!-- ─── ECOSYSTEM ─── -->
-<section id="ecosystem">
+<!-- ECOSYSTEM -->
+<section id="eco">
   <div class="container">
-    <div class="eco-header fade-in">
-      <div class="tag" style="margin:0 auto 20px;display:inline-flex"><span></span> Ուղղությունները</div>
-      <h2 class="section-title">Ամբողջ Էկոհամակարգ</h2>
-      <p class="section-subtitle" style="margin:12px auto 0">
-        GTH Academy-ն ոչ թե մեկ դասընթաց է, այլ ամբողջ ինֆրաստրուկտուրա, որը ծառայում
-        է բիզնեսի բոլոր կարևոր ուղղություններում:
+    <div class="eco-head reveal">
+      <div class="chip" style="margin-bottom:16px"><span class="chip-dot"></span> Ուղղություններ</div>
+      <h2 class="sec-title">Ամբողջ Էկոհամակարգ</h2>
+      <p class="sec-sub">
+        GTH Academy-ն ոչ թե մեկ դասընթաց է — այլ ամբողջ ինֆրաստրուկտուրա
+        բիզնեսի բոլոր կարևոր ուղղություններով:
       </p>
     </div>
     <div class="eco-grid">
-      <div class="eco-card fade-in">
-        <div class="eco-card-num">01</div>
-        <div class="eco-card-icon"><i class="fas fa-graduation-cap"></i></div>
-        <div class="eco-card-title">Բիզնես Կրթություն</div>
-        <div class="eco-card-desc">Ակադեմիա, ծրագրեր, դասընթացներ — ամեն ինչ մատչելի, կառուցվածքային ձևաչափով: Սկսնակից մինչև խորացված մակարդակ:</div>
-        <span class="eco-card-tag">Ակադեմիա</span>
+      <div class="eco-card reveal">
+        <div class="eco-n">01</div>
+        <div class="eco-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="eco-name">Բիզնես Կրթություն</div>
+        <div class="eco-desc">Ակադեմիա, ծրագրեր, դասընթացներ — կառուցվածքային ձևաչափով: Սկսնակից մինչև խորացված մակարդակ:</div>
+        <span class="eco-tag">Ակադեմիա</span>
       </div>
-      <div class="eco-card fade-in" style="transition-delay:0.08s">
-        <div class="eco-card-num">02</div>
-        <div class="eco-card-icon"><i class="fas fa-truck"></i></div>
-        <div class="eco-card-title">Լոգիստիկա & Fulfillment</div>
-        <div class="eco-card-desc">Ապրանքի փոխադրում, պահեստ, ուղարկում: Ամբողջ fulfillment գործընթացը կազմակերպված և կառավարելի:</div>
-        <span class="eco-card-tag">Logistics</span>
+      <div class="eco-card reveal" style="transition-delay:.07s">
+        <div class="eco-n">02</div>
+        <div class="eco-icon"><i class="fas fa-truck"></i></div>
+        <div class="eco-name">Լոգիստիկա & Fulfillment</div>
+        <div class="eco-desc">Ապրանքի փոխադրում, պահեստ, ուղարկում: Ամբողջ fulfillment գործընթացը՝ կառավարելի:</div>
+        <span class="eco-tag">Logistics</span>
       </div>
-      <div class="eco-card fade-in" style="transition-delay:0.16s">
-        <div class="eco-card-num">03</div>
-        <div class="eco-card-icon"><i class="fas fa-search-dollar"></i></div>
-        <div class="eco-card-title">Sourcing — Չինաստան</div>
-        <div class="eco-card-desc">Ապրանքի որոնում Չինաստանի շուկայից: Ճիշտ մատակարարի ընտրություն, գնի բանակցություն, լոտի ձևավորում:</div>
-        <span class="eco-card-tag">Sourcing</span>
+      <div class="eco-card reveal" style="transition-delay:.14s">
+        <div class="eco-n">03</div>
+        <div class="eco-icon"><i class="fas fa-search-dollar"></i></div>
+        <div class="eco-name">Sourcing — Չինաստան</div>
+        <div class="eco-desc">Ապրանքի որոնում Չինաստանի շուկայից: Ճիշտ մատակարար, գնի բանակցություն, լոտ:</div>
+        <span class="eco-tag">Sourcing</span>
       </div>
-      <div class="eco-card fade-in" style="transition-delay:0.24s">
-        <div class="eco-card-num">04</div>
-        <div class="eco-card-icon"><i class="fas fa-chart-bar"></i></div>
-        <div class="eco-card-title">Ապրանքի Վերլուծություն</div>
-        <div class="eco-card-desc">Շուկայի վերլուծություն, պահանջարկ, մրցակիցներ, margin: Ճիշտ ապրանքի ընտրություն — բիզնեսի հիմքը:</div>
-        <span class="eco-card-tag">Analytics</span>
+      <div class="eco-card reveal" style="transition-delay:.21s">
+        <div class="eco-n">04</div>
+        <div class="eco-icon"><i class="fas fa-chart-bar"></i></div>
+        <div class="eco-name">Ապրանքի Վերլուծություն</div>
+        <div class="eco-desc">Շուկայի ստուգում, պահանջարկ, մրցակիցներ, margin: Ճիշտ ապրանք — բիզնեսի հիմքը:</div>
+        <span class="eco-tag">Analytics</span>
       </div>
-      <div class="eco-card fade-in" style="transition-delay:0.32s">
-        <div class="eco-card-num">05</div>
-        <div class="eco-card-icon"><i class="fas fa-handshake"></i></div>
-        <div class="eco-card-title">Բիզնես Խորհրդատվություն</div>
-        <div class="eco-card-desc">Անհատական աջակցություն, ռազմավարական խորհրդատվություն: Կողքի ուղեկից ամբողջ ճանապարհին:</div>
-        <span class="eco-card-tag">Consulting</span>
+      <div class="eco-card reveal" style="transition-delay:.28s">
+        <div class="eco-n">05</div>
+        <div class="eco-icon"><i class="fas fa-handshake"></i></div>
+        <div class="eco-name">Բիզնես Խորհրդատվություն</div>
+        <div class="eco-desc">Անհատական ռազմավարական աջակցություն: Կողքի ուղեկից ամբողջ ճանապարհին:</div>
+        <span class="eco-tag">Consulting</span>
       </div>
-      <div class="eco-card fade-in" style="transition-delay:0.40s" style="background:var(--gold-dim);border-color:rgba(201,168,76,0.25);">
-        <div class="eco-card-num" style="color:var(--gold)">GTH</div>
-        <div class="eco-card-icon" style="background:rgba(201,168,76,0.2)"><i class="fas fa-infinity"></i></div>
-        <div class="eco-card-title">Ամբողջ Էկոհամակարգ</div>
-        <div class="eco-card-desc">Բոլոր ուղղությունները կապված են մեկ ամբողջ մոտեցմամբ: Ոչ թե մի ծառայություն — ամբողջ ճանապարհ:</div>
-        <button class="btn btn-gold" style="margin-top:16px;padding:10px 20px;font-size:13px;" onclick="openModal()">
+      <div class="eco-card highlight reveal" style="transition-delay:.35s">
+        <div class="eco-n" style="opacity:1">GTH</div>
+        <div class="eco-icon"><i class="fas fa-infinity"></i></div>
+        <div class="eco-name">Ամբողջ Ճանապարհ</div>
+        <div class="eco-desc">Բոլոր ուղղությունները կապված են մեկ ամբողջ մոտեցմամբ: Ոչ թե ծառայություն — ամբողջ ճանապարհ:</div>
+        <button class="btn btn-accent" style="margin-top:20px;padding:11px 22px;font-size:13px;" onclick="openModal()">
           Սկսել հիմա <i class="fas fa-arrow-right"></i>
         </button>
       </div>
@@ -835,223 +850,224 @@ app.get('/', (c) => {
   </div>
 </section>
 
-<!-- ─── STATS ─── -->
+<!-- STATS -->
 <section id="stats">
   <div class="container">
-    <div class="stats-grid fade-in">
-      <div class="stat-item">
-        <div class="stat-number">3200<span class="stat-plus">+</span></div>
-        <div class="stat-label">Ուսանող ամբողջ ծրագրերում</div>
+    <div class="stats-row reveal">
+      <div class="sitem">
+        <div class="sval"><span id="s1">0</span><sup>+</sup></div>
+        <div class="slbl">Ուսանող ամբողջ ծրագրերում</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">150<span class="stat-plus">+</span></div>
-        <div class="stat-label">Իրականացված ծրագիր</div>
+      <div class="sitem">
+        <div class="sval"><span id="s2">0</span><sup>+</sup></div>
+        <div class="slbl">Իրականացված ծրագիր</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">5</div>
-        <div class="stat-label">Հիմնական ուղղություն</div>
+      <div class="sitem">
+        <div class="sval"><span id="s3">0</span></div>
+        <div class="slbl">Հիմնական ուղղություն</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number">1</div>
-        <div class="stat-label">Ամբողջ Էկոհամակարգ</div>
+      <div class="sitem">
+        <div class="sval"><span id="s4">1</span></div>
+        <div class="slbl">Ամբողջ Էկոհամակարգ</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── APP SECTION ─── -->
+<!-- APP -->
 <section id="app-section">
   <div class="container">
     <div class="app-grid">
-      <div class="app-mockup fade-in">
-        <div class="app-phone-bg"></div>
-        <div class="app-phone-wrap">
-          <div class="app-phone">
-            <div class="app-phone-header">
-              <div class="app-phone-notch"></div>
-              <div class="app-phone-title">GTH Academy</div>
-              <div class="app-phone-sub">Հարթակ</div>
+      <div class="phone-wrap reveal">
+        <div class="phone-glow"></div>
+        <div class="phone">
+          <div class="phone-bar">
+            <div class="phone-notch"></div>
+            <div class="phone-bar-title">GTH Academy</div>
+            <div class="phone-bar-sub">Կրթական հարթակ</div>
+          </div>
+          <div class="phone-body">
+            <div class="pcourse">
+              <div class="pcourse-ico"><i class="fas fa-store"></i></div>
+              <div style="flex:1">
+                <div class="pcourse-name">Marketplaces Basics</div>
+                <div class="pbar"><div class="pbar-fill" style="width:72%"></div></div>
+              </div>
             </div>
-            <div class="app-phone-body">
-              <div class="app-course-item">
-                <div class="app-course-icon"><i class="fas fa-store"></i></div>
-                <div style="flex:1">
-                  <div class="app-course-name">Marketplaces Basics</div>
-                  <div class="app-course-progress-bar"><div class="app-course-progress-fill" style="width:72%"></div></div>
-                </div>
+            <div class="pcourse">
+              <div class="pcourse-ico"><i class="fas fa-box"></i></div>
+              <div style="flex:1">
+                <div class="pcourse-name">Product Sourcing Pro</div>
+                <div class="pbar"><div class="pbar-fill" style="width:45%"></div></div>
               </div>
-              <div class="app-course-item">
-                <div class="app-course-icon"><i class="fas fa-box"></i></div>
-                <div style="flex:1">
-                  <div class="app-course-name">Product Sourcing Pro</div>
-                  <div class="app-course-progress-bar"><div class="app-course-progress-fill" style="width:45%"></div></div>
-                </div>
+            </div>
+            <div class="pcourse">
+              <div class="pcourse-ico"><i class="fas fa-chart-line"></i></div>
+              <div style="flex:1">
+                <div class="pcourse-name">Business Analytics</div>
+                <div class="pbar"><div class="pbar-fill" style="width:20%"></div></div>
               </div>
-              <div class="app-course-item">
-                <div class="app-course-icon"><i class="fas fa-chart-line"></i></div>
-                <div style="flex:1">
-                  <div class="app-course-name">Business Analytics</div>
-                  <div class="app-course-progress-bar"><div class="app-course-progress-fill" style="width:20%"></div></div>
-                </div>
+            </div>
+            <div class="pcourse">
+              <div class="pcourse-ico"><i class="fas fa-handshake"></i></div>
+              <div style="flex:1">
+                <div class="pcourse-name">Consulting Workshop</div>
+                <div class="pbar"><div class="pbar-fill" style="width:10%"></div></div>
               </div>
             </div>
           </div>
-          <div class="app-phone-float">
-            <div class="app-float-icon"><i class="fas fa-fire"></i></div>
-            <div>
-              <div class="app-float-val">3,200+</div>
-              <div class="app-float-lbl">Ուսանողներ</div>
-            </div>
+        </div>
+        <div class="phone-float">
+          <div class="pf-icon"><i class="fas fa-users"></i></div>
+          <div>
+            <div class="pf-val">3 200+</div>
+            <div class="pf-lbl">Ուսանող</div>
           </div>
         </div>
       </div>
 
-      <div class="app-content fade-in" style="transition-delay:0.15s">
-        <div class="tag"><span></span> Հավելված</div>
-        <h2 class="section-title">Ամբողջ Կրթությունը — Ձեռքիդ Մեջ</h2>
-        <div class="divider"></div>
-        <p class="section-subtitle" style="max-width:100%">
-          GTH Academy-ի հավելվածը հիմնական ուսուցման միջավայրն է: Ամբողջ կրթական գործընթացը,
-          նյութերը, լայվ սեսիաները — ամեն ինչ մի վայրում:
+      <div class="reveal" style="transition-delay:.12s">
+        <div class="chip" style="margin-bottom:18px"><span class="chip-dot"></span> Հավելված</div>
+        <h2 class="sec-title">Ամբողջ Կրթությունը — Ձեռքիդ Մեջ</h2>
+        <div class="rule"></div>
+        <p class="sec-sub" style="max-width:100%">
+          GTH Academy հավելվածը հիմնական ուսուցման միջավայրն է: Ծրագրեր,
+          live sessions, materials — ամեն ինչ մի հարթակում:
         </p>
         <div class="app-features">
-          <div class="app-feature">
-            <div class="app-feature-icon"><i class="fas fa-play-circle"></i></div>
+          <div class="afeat">
+            <div class="afeat-ico"><i class="fas fa-play-circle"></i></div>
             <div>
-              <div class="app-feature-title">Բոլոր Ծրագրերը</div>
-              <div class="app-feature-desc">Վիդեո-դասընթացներ, materials, tasks — կառուցվածքային ձևաչափով</div>
+              <div class="afeat-title">Բոլոր Ծրագրերը</div>
+              <div class="afeat-desc">Վիդեո-դասընթացներ, materials, tasks — կառուցվածքային ձևաչափով</div>
             </div>
           </div>
-          <div class="app-feature">
-            <div class="app-feature-icon"><i class="fas fa-broadcast-tower"></i></div>
+          <div class="afeat">
+            <div class="afeat-ico"><i class="fas fa-broadcast-tower"></i></div>
             <div>
-              <div class="app-feature-title">Live Sessionner</div>
-              <div class="app-feature-desc">Ուղիղ եթեր, հարց-պատասխան, group sessions</div>
+              <div class="afeat-title">Live Sessions</div>
+              <div class="afeat-desc">Ուղիղ եթեր, Q&A, group sessions — ուղիղ կապ թիմի հետ</div>
             </div>
           </div>
-          <div class="app-feature">
-            <div class="app-feature-icon"><i class="fas fa-bell"></i></div>
+          <div class="afeat">
+            <div class="afeat-ico"><i class="fas fa-bell"></i></div>
             <div>
-              <div class="app-feature-title">Ծանուցումներ & Թարմացումներ</div>
-              <div class="app-feature-desc">Նոր բովանդակություն, live-ի ծանուցումներ, կարևոր թարմացումներ</div>
+              <div class="afeat-title">Ծանուցումներ</div>
+              <div class="afeat-desc">Նոր բովանդակություն, live-ի ծանուցումներ, կարևոր թարմացումներ</div>
             </div>
           </div>
         </div>
-        <div class="app-download-btns">
-          <a href="#" class="btn-store" onclick="event.preventDefault();alert('iOS App Store — Շուտով!')">
+        <div class="store-btns">
+          <button class="sbtn" onclick="alert('App Store — Շուտով!')">
             <i class="fab fa-apple"></i>
-            <div class="btn-store-text">
-              <div class="btn-store-sub">Ներբեռնել</div>
-              <div class="btn-store-name">App Store</div>
-            </div>
-          </a>
-          <a href="#" class="btn-store" onclick="event.preventDefault();alert('Google Play — Շուտով!')">
+            <div><div class="sbtn-sub">Ներբեռնել</div><div class="sbtn-name">App Store</div></div>
+          </button>
+          <button class="sbtn" onclick="alert('Google Play — Շուտով!')">
             <i class="fab fa-google-play"></i>
-            <div class="btn-store-text">
-              <div class="btn-store-sub">Ներբեռնել</div>
-              <div class="btn-store-name">Google Play</div>
-            </div>
-          </a>
+            <div><div class="sbtn-sub">Ներբեռնել</div><div class="sbtn-name">Google Play</div></div>
+          </button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── CTA ─── -->
+<!-- CTA -->
 <section id="cta">
   <div class="container">
-    <div class="cta-inner fade-in">
-      <div>
-        <div class="tag"><span></span> Հաջորդ քայլ</div>
-        <h2 class="cta-title">Պատրա՞ստ ես Սկսել</h2>
-        <p class="cta-sub">
-          Ոչ ևս տեսություն — սկսիր կառուցել ճիշտ համակարգ: Թողիր հայտ, մենք կկապվենք
-          ու կներկայացնենք ճիշտ ծրագիր:
-        </p>
-      </div>
-      <div class="cta-actions">
-        <button class="btn btn-primary" onclick="openModal()" style="font-size:15px;padding:16px 32px;">
-          <i class="fas fa-paper-plane"></i> Թողնել Հայտ
-        </button>
-        <a href="https://wa.me/37498000000" target="_blank" class="btn btn-whatsapp" style="font-size:15px;padding:16px 32px;">
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </a>
+    <div class="cta-box reveal">
+      <div class="cta-inner">
+        <div>
+          <div class="chip" style="margin-bottom:18px"><span class="chip-dot"></span> Հաջորդ Քայլ</div>
+          <h2 class="cta-title">Պատրա՞ստ ես Սկսել</h2>
+          <p class="cta-sub">
+            Ոչ ևս տեսություն — կառուցիր ճիշտ համակարգ: Թողիր հայտ, կկապվենք
+            ու կկներկայացնենք ճիշտ ծրագիր:
+          </p>
+        </div>
+        <div class="cta-acts">
+          <button class="btn btn-white btn-lg" onclick="openModal()">
+            <i class="fas fa-paper-plane"></i> Թողնել Հայտ
+          </button>
+          <a href="https://wa.me/37498000000" target="_blank" class="btn btn-wa btn-lg">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
+<!-- FOOTER -->
 <footer>
   <div class="container">
-    <div class="footer-inner">
+    <div class="footer-grid">
       <div class="footer-brand">
         <img src="/static/logo2.png" alt="GTH Academy" />
         <p>Բիզնես կրթական հարթակ և էկոհամակարգ: Կառուցիր ճիշտ բիզնես — համակարգային մոտեցմամբ:</p>
       </div>
       <div>
-        <div class="footer-col-title">Ուղղություններ</div>
-        <ul class="footer-links">
-          <li><a href="#ecosystem">Բիզնես Կրթություն</a></li>
-          <li><a href="#ecosystem">Լոգիստիկա</a></li>
-          <li><a href="#ecosystem">Sourcing</a></li>
-          <li><a href="#ecosystem">Վերլուծություն</a></li>
-          <li><a href="#ecosystem">Խորհրդատվություն</a></li>
+        <div class="fcol-title">Ուղղություններ</div>
+        <ul class="flinks">
+          <li><a href="#eco">Բիզնես Կրթություն</a></li>
+          <li><a href="#eco">Լոգիստիկա</a></li>
+          <li><a href="#eco">Sourcing</a></li>
+          <li><a href="#eco">Վերլուծություն</a></li>
+          <li><a href="#eco">Խորհրդատվություն</a></li>
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Ակադեմիա</div>
-        <ul class="footer-links">
+        <div class="fcol-title">Ակադեմիա</div>
+        <ul class="flinks">
           <li><a href="#about">Մեր Մոտեցումը</a></li>
           <li><a href="#app-section">Հավելված</a></li>
           <li><a href="#stats">Արդյունքներ</a></li>
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Կապ</div>
-        <ul class="footer-links">
-          <li><a href="https://wa.me/37498000000" target="_blank"><i class="fab fa-whatsapp" style="width:14px"></i> WhatsApp</a></li>
-          <li><a href="mailto:info@gthacademy.am"><i class="fas fa-envelope" style="width:14px"></i> Email</a></li>
+        <div class="fcol-title">Կապ</div>
+        <ul class="flinks">
+          <li><a href="https://wa.me/37498000000" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+          <li><a href="mailto:info@gthacademy.am"><i class="fas fa-envelope"></i> Email</a></li>
         </ul>
-        <div style="margin-top:20px;">
-          <button class="btn btn-gold" style="width:100%;padding:12px;font-size:13px;text-align:center;" onclick="openModal()">
-            <i class="fas fa-arrow-right"></i> Թողնել Հայտ
+        <div style="margin-top:20px">
+          <button class="btn btn-accent" style="width:100%;justify-content:center;font-size:13px;padding:12px;" onclick="openModal()">
+            Թողնել Հայտ <i class="fas fa-arrow-right"></i>
           </button>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div class="footer-copyright">© 2025 GTH Academy. Բոլոր իրավունքները պաշտպանված են:</div>
-      <div class="footer-socials">
-        <a href="#" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social-btn" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
-        <a href="https://wa.me/37498000000" target="_blank" class="social-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <div class="footer-bot">
+      <div class="footer-copy">© 2025 GTH Academy. Բոլոր իրավունքները պաշտպանված են:</div>
+      <div class="socials">
+        <a href="#" class="soc-btn"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-telegram-plane"></i></a>
+        <a href="https://wa.me/37498000000" target="_blank" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- ─── MODAL FORM ─── -->
-<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-    <div id="formContent">
-      <h2 class="modal-title">Թողնել Հայտ</h2>
-      <p class="modal-sub">Լրացրու ձևը, մենք կկապվենք 24 ժամվա ընթացքում</p>
-      <form id="applyForm" onsubmit="submitForm(event)">
-        <div class="form-group">
-          <label class="form-label">Անուն Ազգանուն</label>
-          <input type="text" class="form-input" placeholder="Հովհաննես Հայկյան" required />
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="overlayClick(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div id="fwrap">
+      <h2 class="modal-h">Թողնել Հայտ</h2>
+      <p class="modal-s">Լրացրու ձևը, մենք կկապվենք 24 ժամվա ընթացքում</p>
+      <form id="aform" onsubmit="submitForm(event)">
+        <div class="fg">
+          <label class="fl">Անուն Ազգանուն</label>
+          <input type="text" class="fi" placeholder="Հովհաննես Հայկյան" required />
         </div>
-        <div class="form-group">
-          <label class="form-label">Հեռախոս</label>
-          <input type="tel" class="form-input" placeholder="+374 XX XXX XXX" required />
+        <div class="fg">
+          <label class="fl">Հեռախոս</label>
+          <input type="tel" class="fi" placeholder="+374 XX XXX XXX" required />
         </div>
-        <div class="form-group">
-          <label class="form-label">Ուղղություն</label>
-          <select class="form-input form-select">
+        <div class="fg">
+          <label class="fl">Ուղղություն</label>
+          <select class="fi fsel">
             <option value="">Ընտրել ուղղություն</option>
             <option>Բիզնես Կրթություն</option>
             <option>Լոգիստիկա & Fulfillment</option>
@@ -1060,16 +1076,16 @@ app.get('/', (c) => {
             <option>Բիզնես Խորհրդատվություն</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:15px;margin-top:8px;">
+        <button type="submit" class="btn btn-accent" style="width:100%;justify-content:center;padding:14px;font-size:15px;margin-top:6px;">
           <i class="fas fa-paper-plane"></i> Ուղարկել Հայտ
         </button>
       </form>
     </div>
-    <div id="formSuccess" class="form-success" style="display:none">
-      <div class="form-success-icon"><i class="fas fa-check-circle"></i></div>
-      <h3 class="form-success-title">Հայտն Ընդունված Է!</h3>
-      <p class="form-success-sub">Մենք կկապվենք ձեզ հետ 24 ժամվա ընթացքում:<br/>Կարող ես նաև անմիջապես գրել WhatsApp-ում:</p>
-      <a href="https://wa.me/37498000000" target="_blank" class="btn btn-whatsapp" style="margin-top:20px;">
+    <div id="fsuccess" class="fsuccess" style="display:none">
+      <div class="fsuccess-ic"><i class="fas fa-check-circle"></i></div>
+      <h3 class="fsuccess-h">Հայտն Ընդունված Է!</h3>
+      <p class="fsuccess-s">Մենք կկապվենք ձեզ հետ 24 ժամվա ընթացքում:<br/>Կարող ես նաև անմիջապես գրել:</p>
+      <a href="https://wa.me/37498000000" target="_blank" class="btn btn-wa" style="margin-top:20px;">
         <i class="fab fa-whatsapp"></i> Գրել WhatsApp-ում
       </a>
     </div>
@@ -1077,103 +1093,86 @@ app.get('/', (c) => {
 </div>
 
 <script>
-  // ─── NAVBAR SCROLL ───
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
+// NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 36));
+
+// MODAL
+function openModal()  { document.getElementById('overlay').classList.add('on'); document.body.style.overflow='hidden'; }
+function closeModal() {
+  document.getElementById('overlay').classList.remove('on');
+  document.body.style.overflow='';
+  setTimeout(() => {
+    document.getElementById('fwrap').style.display='block';
+    document.getElementById('fsuccess').style.display='none';
+    document.getElementById('aform').reset();
+  }, 300);
+}
+function overlayClick(e) { if(e.target===document.getElementById('overlay')) closeModal(); }
+
+// FORM
+function submitForm(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Ուղարկվում...';
+  btn.disabled=true;
+  setTimeout(() => {
+    document.getElementById('fwrap').style.display='none';
+    document.getElementById('fsuccess').style.display='block';
+  }, 1100);
+}
+
+// MOBILE MENU
+function openMenu()  { document.getElementById('mmenu').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeMenu() { document.getElementById('mmenu').classList.remove('open'); document.body.style.overflow=''; }
+
+// REVEAL ON SCROLL
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// ANCHOR SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
   });
+});
 
-  // ─── MODAL ───
-  function openModal() {
-    document.getElementById('modalOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
+// COUNTER
+function count(el, end, dur=1600) {
+  const s = performance.now();
+  const tick = now => {
+    const p = Math.min((now-s)/dur, 1);
+    const v = Math.floor((1-Math.pow(1-p,3))*end);
+    el.textContent = v >= 1000 ? (v/1000).toFixed(1).replace('.0','')+' '+String(end).slice(-3) : v;
+    if(p<1) requestAnimationFrame(tick);
+    else el.textContent = end >= 1000 ? Math.floor(end/1000)+' '+String(end).slice(-3) : end;
+  };
+  requestAnimationFrame(tick);
+}
+// hero metrics
+const heroObs = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting){
+    count(document.getElementById('m1'), 3200);
+    count(document.getElementById('m2'), 150);
+    document.getElementById('m3').textContent = '5';
+    heroObs.disconnect();
   }
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('active');
-    document.body.style.overflow = '';
-    setTimeout(() => {
-      document.getElementById('formContent').style.display = 'block';
-      document.getElementById('formSuccess').style.display = 'none';
-      document.getElementById('applyForm').reset();
-    }, 300);
+}, {threshold:.3});
+heroObs.observe(document.getElementById('hero'));
+
+// stats section
+const statsObs = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting){
+    count(document.getElementById('s1'), 3200);
+    count(document.getElementById('s2'), 150);
+    document.getElementById('s3').textContent = '5';
+    statsObs.disconnect();
   }
-  function handleOverlayClick(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-  }
-
-  // ─── FORM SUBMIT ───
-  function submitForm(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button[type=submit]');
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ուղարկվում...';
-    btn.disabled = true;
-    setTimeout(() => {
-      document.getElementById('formContent').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    }, 1200);
-  }
-
-  // ─── MOBILE MENU ───
-  function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
-
-  // ─── FADE IN ON SCROLL ───
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // ─── SMOOTH ANCHOR SCROLL ───
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
-  // ─── COUNTER ANIMATION ───
-  function animateCounter(el, end, suffix = '') {
-    let start = 0;
-    const duration = 1800;
-    const startTime = performance.now();
-    const update = (now) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.floor(eased * end).toLocaleString() + suffix;
-      if (progress < 1) requestAnimationFrame(update);
-    };
-    requestAnimationFrame(update);
-  }
-
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const nums = [
-          { el: document.querySelectorAll('.stat-number')[0], val: 3200, suffix: '+' },
-          { el: document.querySelectorAll('.stat-number')[1], val: 150, suffix: '+' },
-          { el: document.querySelectorAll('.stat-number')[2], val: 5, suffix: '' },
-          { el: document.querySelectorAll('.stat-number')[3], val: 1, suffix: '' },
-        ];
-        nums.forEach(n => {
-          if (n.el) animateCounter(n.el, n.val, n.suffix);
-        });
-        statsObserver.disconnect();
-      }
-    });
-  }, { threshold: 0.3 });
-
-  const statsSection = document.getElementById('stats');
-  if (statsSection) statsObserver.observe(statsSection);
+}, {threshold:.3});
+statsObs.observe(document.getElementById('stats'));
 </script>
 </body>
 </html>`)
