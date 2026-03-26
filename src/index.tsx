@@ -19,6 +19,7 @@ app.get('/', (c) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GTH Academy — Բիզնես Կրթական Հարթակ</title>
   <meta name="description" content="GTH Academy — Բիզնես կրթական հարթակ և էկոհամակարգ: Սովորեք, կառուցեք և զարգացրեք ձեր բիզնեսը:" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -619,7 +620,7 @@ app.get('/', (c) => {
 <nav id="navbar">
   <div class="nav-inner">
     <a href="/" class="nav-logo">
-      <img src="https://www.genspark.ai/api/files/s/hQhCCANW" alt="GTH Academy" />
+      <img src="/static/logo1.png" alt="GTH Academy" />
     </a>
     <ul class="nav-links">
       <li><a href="#about">Մեր մոտեցումը</a></li>
@@ -703,7 +704,7 @@ app.get('/', (c) => {
 
       <div class="hero-visual fade-in" style="transition-delay:0.15s">
         <div class="hero-card-main">
-          <img src="https://www.genspark.ai/api/files/s/wBxoxw4F" alt="GTH Academy workshop" />
+          <img src="/static/photo2.jpg" alt="GTH Academy workshop" />
           <div class="card-caption">
             <div class="cap-tag">Live Session</div>
             <h3>Բիզնես Կառուցման Ինտենսիվ</h3>
@@ -731,11 +732,11 @@ app.get('/', (c) => {
     <div class="about-grid">
       <div class="about-images fade-in">
         <div class="about-img-main">
-          <img src="https://www.genspark.ai/api/files/s/OAZprCn8" alt="GTH Academy session" />
+          <img src="/static/photo3.jpg" alt="GTH Academy session" />
           <div class="about-img-label">Live Sessionner</div>
         </div>
         <div class="about-img-secondary">
-          <img src="https://www.genspark.ai/api/files/s/FK0waxOW" alt="GTH Academy team" />
+          <img src="/static/photo1.jpg" alt="GTH Academy team" />
         </div>
       </div>
       <div class="about-content fade-in" style="transition-delay:0.15s">
@@ -986,7 +987,7 @@ app.get('/', (c) => {
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="https://www.genspark.ai/api/files/s/bs8Ryi8f" alt="GTH Academy" />
+        <img src="/static/logo2.png" alt="GTH Academy" />
         <p>Բիզնես կրթական հարթակ և էկոհամակարգ: Կառուցիր ճիշտ բիզնես — համակարգային մոտեցմամբ:</p>
       </div>
       <div>
