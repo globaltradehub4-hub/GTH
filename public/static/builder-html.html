@@ -1,0 +1,586 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" />
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-wrap">
+    <a href="/" class="nav-logo-text">GTH <span>Academy</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Մեր մոտեցումը</a></li>
+      <li><a href="#eco">Ուղղություններ</a></li>
+      <li><a href="#app-section">Հավելված</a></li>
+      <li><a href="#stats">Արդյունքներ</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://wa.me/37498000000" target="_blank" class="btn btn-ghost" style="padding:10px 18px;font-size:13px;">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+      <button class="btn btn-accent" style="padding:10px 18px;font-size:13px;" onclick="openModal()">
+        Դիմել Հիմա
+      </button>
+    </div>
+    <button class="nav-burger" onclick="openMenu()" aria-label="menu"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mmenu" id="mmenu">
+  <button class="mmenu-close" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+  <a href="#about" onclick="closeMenu()">Մեր մոտեցումը</a>
+  <a href="#eco" onclick="closeMenu()">Ուղղություններ</a>
+  <a href="#app-section" onclick="closeMenu()">Հավելված</a>
+  <a href="#stats" onclick="closeMenu()">Արդյունքներ</a>
+  <div class="mmenu-btns">
+    <a href="https://wa.me/37498000000" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Գրել WhatsApp-ում</a>
+    <button class="btn btn-accent" onclick="closeMenu();openModal()">Ներկայացնել Դիմում</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="reveal">
+        <div class="hero-eyebrow">
+          <span class="label"><i class="fas fa-graduation-cap"></i> Բիզնես Կրթական Հարթակ</span>
+        </div>
+        <h1 class="hero-h1">
+          Զարգացիր<br/>
+          <em>Ճիշտ</em><br/>
+          Կրթությամբ
+        </h1>
+        <p class="hero-lead">
+          GTH Academy-ն մասնագիտական կրթական հարթակ է, որտեղ ձեռք ես բերում
+          գործնական գիտելիքներ և կոմպետենցիաներ բիզնեսի կառուցման,
+          sourcing-ի, լոգիստիկայի և շուկայի վերլուծության ոլորտներում:
+        </p>
+        <div class="hero-cta">
+          <button class="btn btn-white btn-lg" onclick="openModal()">
+            Դիմել Հիմա <i class="fas fa-arrow-right"></i>
+          </button>
+          <a href="https://wa.me/37498000000" target="_blank" class="btn btn-wa btn-lg">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-val" id="m1">0<sup>+</sup></div>
+            <div class="metric-lbl">Ուսանող</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val" id="m2">0<sup>+</sup></div>
+            <div class="metric-lbl">Ծրագրեր</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val" id="m3">0</div>
+            <div class="metric-lbl">Ուղղություն</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right reveal" style="transition-delay:.12s">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-title">GTH Academy — Platform</div>
+            <div class="live-dot">Live հիմա</div>
+          </div>
+          <div class="dir-list">
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-graduation-cap"></i></div>
+              <div><div class="dir-name">Բիզնես Կրթություն</div><div class="dir-sub">Ծրագրեր, ակադեմիա</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-truck"></i></div>
+              <div><div class="dir-name">Լոգիստիկա</div><div class="dir-sub">Fulfillment, delivery</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-search-dollar"></i></div>
+              <div><div class="dir-name">Sourcing</div><div class="dir-sub">Չինաստան, մատակարարներ</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-chart-bar"></i></div>
+              <div><div class="dir-name">Ապրանքի Վերլուծություն</div><div class="dir-sub">Margin, demand, competitors</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="dir-item">
+              <div class="dir-icon"><i class="fas fa-handshake"></i></div>
+              <div><div class="dir-name">Խորհրդատվություն</div><div class="dir-sub">Անհատական աջակցություն</div></div>
+              <div class="dir-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="badge-float bf-left">
+          <div class="bf-icon"><i class="fas fa-users"></i></div>
+          <div>
+            <div class="bf-val">3 200<sup style="font-size:11px;color:var(--a)">+</sup></div>
+            <div class="bf-lbl">Ուսանող</div>
+          </div>
+        </div>
+        <div class="badge-float bf-top">
+          <div class="bf-icon"><i class="fas fa-check-circle"></i></div>
+          <div>
+            <div class="bf-val">150<sup style="font-size:11px;color:var(--a)">+</sup></div>
+            <div class="bf-lbl">Ծրագիր</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="story-wrap reveal">
+        <div class="story-quote">"</div>
+        <p class="story-text">
+          GTH Academy-ն հիմնված է խորը արդյունաբերական փորձի վրա: Մեր
+          ուսումնական ծրագրերն արտացոլում են e-commerce, supply chain
+          management-ի և բիզնես վերլուծության ոլորտներում ձևավորված
+          լավագույն պրակտիկաները:
+        </p>
+        <p class="story-text">
+          Ամեն մոդուլ մշակված է փորձառու մասնագետների կողմից, ապահովելով
+          ուսանողներին արդիական, կիրառական և արդյունաբերության ստանդարտներին
+          համապատասխան կոմպետենցիաներ:
+        </p>
+        <div class="story-sign">
+          <div class="sign-av">G</div>
+          <div>
+            <div class="sign-name">GTH Academy Team</div>
+            <div class="sign-role">Բիզնես Կրթական Հարթակ</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:.1s">
+        <div class="chip" style="margin-bottom:20px"><span class="chip-dot"></span> Մեր Մոտեցումը</div>
+        <h2 class="sec-title">Կրթություն, որը<br/>Բերում է Արդյունք</h2>
+        <div class="rule"></div>
+        <p class="sec-sub" style="max-width:100%">
+          Մեր ուսումնական մոտեցման կենտրոնում ոչ թե տեսական գիտելիքն է,
+          այլ դրա կիրառությունը: Կառուցված մեթոդաբանություն,
+          փորձառու դասախոսներ, ուղղված արդյունքի:
+        </p>
+        <div class="pillars">
+          <div class="pillar">
+            <div class="p-icon"><i class="fas fa-layer-group"></i></div>
+            <div class="p-name">Կառուցվածք</div>
+            <div class="p-desc">Ինտեգրված ուսումնական ծրագրեր, համապարփակ մասնագիտական պատրաստվածության համար</div>
+          </div>
+          <div class="pillar">
+            <div class="p-icon"><i class="fas fa-wrench"></i></div>
+            <div class="p-name">Կիրառական</div>
+            <div class="p-desc">Ծրագրերը մշակված են ոլորտի փորձառու մասնագետների կողմից, հիմնված իրական փորձի վրա</div>
+          </div>
+          <div class="pillar">
+            <div class="p-icon"><i class="fas fa-network-wired"></i></div>
+            <div class="p-name">Էկոհամակարգ</div>
+            <div class="p-desc">Logistics, sourcing, analytics — փոխկապակցված ուղղություններ մեկ հարթակում</div>
+          </div>
+          <div class="pillar">
+            <div class="p-icon"><i class="fas fa-bullseye"></i></div>
+            <div class="p-name">Արդյունք</div>
+            <div class="p-desc">Ուսումնառության նպատակը — չափելի կոմպետենցիաներ և մասնագիտական աճ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section id="eco">
+  <div class="container">
+    <div class="eco-head reveal">
+      <div class="chip" style="margin-bottom:16px"><span class="chip-dot"></span> Ուղղություններ</div>
+      <h2 class="sec-title">Ուսումնական Ուղղություններ</h2>
+      <p class="sec-sub">
+        GTH Academy-ն առաջարկում է մասնագիտացված ծրագրեր e-commerce-ի
+        բոլոր հիմնական ոլորտներում, մեկ ինտեգրված հարթակի շրջանակում:
+      </p>
+    </div>
+    <div class="eco-grid">
+      <div class="eco-card reveal">
+        <div class="eco-n">01</div>
+        <div class="eco-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="eco-name">Բիզնես Կրթություն</div>
+        <div class="eco-desc">Կառուցվածքային ուսումնական ծրագրեր, հիմնական, միջinal և խորացված մակարդակներով: Ճկուն ձևաչափ, անհատական ուղու հնարավորությամբ:</div>
+        <span class="eco-tag">Ակադեմիա</span>
+      </div>
+      <div class="eco-card reveal" style="transition-delay:.07s">
+        <div class="eco-n">02</div>
+        <div class="eco-icon"><i class="fas fa-truck"></i></div>
+        <div class="eco-name">Լոգիստիկա & Fulfillment</div>
+        <div class="eco-desc">Supply chain-ի կառավարման ամբողջական ծրագիր, warehousing-ից մինչև last-mile delivery: Ոլորտի ստանդարտներին համապատասխան:</div>
+        <span class="eco-tag">Logistics</span>
+      </div>
+      <div class="eco-card reveal" style="transition-delay:.14s">
+        <div class="eco-n">03</div>
+        <div class="eco-icon"><i class="fas fa-search-dollar"></i></div>
+        <div class="eco-name">Sourcing — Չինաստան</div>
+        <div class="eco-desc">Մատակարարների բացահայտում, գնային բանակցություններ, որակի ստուգում: Գործնական ուղեցույց Չինաստանի մատակարարման շղթայի հետ աշխատելու:</div>
+        <span class="eco-tag">Sourcing</span>
+      </div>
+      <div class="eco-card reveal" style="transition-delay:.21s">
+        <div class="eco-n">04</div>
+        <div class="eco-icon"><i class="fas fa-chart-bar"></i></div>
+        <div class="eco-name">Ապրանքի Վերլուծություն</div>
+        <div class="eco-desc">Տվյալների վրա հիմնված շուկայի հետազոտություն, մրցակցային վերլուծություն, margin modeling: Ռազմավարական որոշումների կայացման գործիքներ:</div>
+        <span class="eco-tag">Analytics</span>
+      </div>
+      <div class="eco-card reveal" style="transition-delay:.28s">
+        <div class="eco-n">05</div>
+        <div class="eco-icon"><i class="fas fa-handshake"></i></div>
+        <div class="eco-name">Բիզնես Խորհրդատվություն</div>
+        <div class="eco-desc">Անհատական մենթորինգ և բիզնես ռազմավարության մշակում: Փորձառու մասնագետների կողմից ուղղորդված աջակցություն ամեն փուլում:</div>
+        <span class="eco-tag">Consulting</span>
+      </div>
+      <div class="eco-card highlight reveal" style="transition-delay:.35s">
+        <div class="eco-n" style="opacity:1">GTH</div>
+        <div class="eco-icon"><i class="fas fa-infinity"></i></div>
+        <div class="eco-name">Ինտեգրված Ծրագիր</div>
+        <div class="eco-desc">Բոլոր ուղղությունները միավորված են մեկ համընդգրկուն ուսումնական ծրագրի մեջ: Ամբողջական մասնագիտական զարգացում մեկ հարթակում:</div>
+        <button class="btn btn-accent" style="margin-top:20px;padding:11px 22px;font-size:13px;" onclick="openModal()">
+          Դիմել Ծրագրին <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-row reveal">
+      <div class="sitem">
+        <div class="sval"><span id="s1">0</span><sup>+</sup></div>
+        <div class="slbl">Ուսանող ծրագրերում</div>
+      </div>
+      <div class="sitem">
+        <div class="sval"><span id="s2">0</span><sup>+</sup></div>
+        <div class="slbl">Ավարտված ուսումնական ծրագիր</div>
+      </div>
+      <div class="sitem">
+        <div class="sval"><span id="s3">0</span></div>
+        <div class="slbl">Մասնագիտական ոլորտ</div>
+      </div>
+      <div class="sitem">
+        <div class="sval"><span id="s4">1</span></div>
+        <div class="slbl">Ինտեգրված Հարթակ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app-section">
+  <div class="container">
+    <div class="app-grid">
+      <div class="phone-wrap reveal">
+        <div class="phone-glow"></div>
+        <div class="phone">
+          <div class="phone-bar">
+            <div class="phone-notch"></div>
+            <div class="phone-bar-title">GTH Academy</div>
+            <div class="phone-bar-sub">Կրթական հարթակ</div>
+          </div>
+          <div class="phone-body">
+            <div class="pcourse">
+              <div class="pcourse-ico"><i class="fas fa-store"></i></div>
+              <div style="flex:1">
+                <div class="pcourse-name">Marketplaces Basics</div>
+                <div class="pbar"><div class="pbar-fill" style="width:72%"></div></div>
+              </div>
+            </div>
+            <div class="pcourse">
+              <div class="pcourse-ico"><i class="fas fa-box"></i></div>
+              <div style="flex:1">
+                <div class="pcourse-name">Product Sourcing Pro</div>
+                <div class="pbar"><div class="pbar-fill" style="width:45%"></div></div>
+              </div>
+            </div>
+            <div class="pcourse">
+              <div class="pcourse-ico"><i class="fas fa-chart-line"></i></div>
+              <div style="flex:1">
+                <div class="pcourse-name">Business Analytics</div>
+                <div class="pbar"><div class="pbar-fill" style="width:20%"></div></div>
+              </div>
+            </div>
+            <div class="pcourse">
+              <div class="pcourse-ico"><i class="fas fa-handshake"></i></div>
+              <div style="flex:1">
+                <div class="pcourse-name">Consulting Workshop</div>
+                <div class="pbar"><div class="pbar-fill" style="width:10%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-float">
+          <div class="pf-icon"><i class="fas fa-users"></i></div>
+          <div>
+            <div class="pf-val">3 200+</div>
+            <div class="pf-lbl">Ուսանող</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:.12s">
+        <div class="chip" style="margin-bottom:18px"><span class="chip-dot"></span> Հավելված</div>
+        <h2 class="sec-title">Ուսումնառությունն Ամենուրեք — Ձեռքի Տակ</h2>
+        <div class="rule"></div>
+        <p class="sec-sub" style="max-width:100%">
+          GTH Academy հավելվածն ապահովում է ամբողջական ուսուցման միջավայր:
+          Կառուցվածքային ծրագրեր, փորձագիտական դասախոսություններ և
+          ինտերակտիվ sessions — մատչելի ցանկաց ժամանակ:
+        </p>
+        <div class="app-features">
+          <div class="afeat">
+            <div class="afeat-ico"><i class="fas fa-play-circle"></i></div>
+            <div>
+              <div class="afeat-title">Ուսումնական Բովանդակություն</div>
+              <div class="afeat-desc">Մասնագիտական վիդեո դասախոսություններ, ուսումնական նյութեր և գործնական առաջադրանքներ</div>
+            </div>
+          </div>
+          <div class="afeat">
+            <div class="afeat-ico"><i class="fas fa-broadcast-tower"></i></div>
+            <div>
+              <div class="afeat-title">Live Sessions</div>
+              <div class="afeat-desc">Ուղիղ եթեր դասախոսություններ, Q&A sessions և փոխազդեցային խմբային աշխատանք</div>
+            </div>
+          </div>
+          <div class="afeat">
+            <div class="afeat-ico"><i class="fas fa-bell"></i></div>
+            <div>
+              <div class="afeat-title">Անհատականացված Ծանուցումներ</div>
+              <div class="afeat-desc">Նոր բովանդակության, live sessions-ի և ուսումնական ժամանակացույցի թարմացումներ</div>
+            </div>
+          </div>
+        </div>
+        <div class="store-btns">
+          <button class="sbtn" onclick="alert('App Store — Շուտով!')">
+            <i class="fab fa-apple"></i>
+            <div><div class="sbtn-sub">Ներբեռնել</div><div class="sbtn-name">App Store</div></div>
+          </button>
+          <button class="sbtn" onclick="alert('Google Play — Շուտով!')">
+            <i class="fab fa-google-play"></i>
+            <div><div class="sbtn-sub">Ներբեռնել</div><div class="sbtn-name">Google Play</div></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-inner">
+        <div>
+          <div class="chip" style="margin-bottom:18px"><span class="chip-dot"></span> Հաջորդ Քայլ</div>
+          <h2 class="cta-title">Սկսե՞ք Ձեր Մասնագիտական Ուղին</h2>
+          <p class="cta-sub">
+            Թողեք դիմում, և մեր ակադեմիական խորհրդատուն կկապվի Ձեզ հետ, 
+            ներկայացնելու Ձեր նպատակներին համապատասխան ծրագիրը:
+          </p>
+        </div>
+        <div class="cta-acts">
+          <button class="btn btn-white btn-lg" onclick="openModal()">
+            <i class="fas fa-paper-plane"></i> Ներկայացնել Դիմում
+          </button>
+          <a href="https://wa.me/37498000000" target="_blank" class="btn btn-wa btn-lg">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" style="font-size:18px;font-weight:900;letter-spacing:-0.03em;color:#fff;text-decoration:none;display:block;margin-bottom:12px;">GTH <span style="color:var(--a)">Academy</span></a>
+        <p>Մասնագիտական կրթական հարթակ e-commerce, sourcing և բիզնես կառավարման ոլորտներում: Ձեր կարիերայի հաջորդ մակարդակը:</p>
+      </div>
+      <div>
+        <div class="fcol-title">Ուղղություններ</div>
+        <ul class="flinks">
+          <li><a href="#eco">Բիզնես Կրթություն</a></li>
+          <li><a href="#eco">Լոգիստիկա</a></li>
+          <li><a href="#eco">Sourcing</a></li>
+          <li><a href="#eco">Վերլուծություն</a></li>
+          <li><a href="#eco">Խորհրդատվություն</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fcol-title">Ակադեմիա</div>
+        <ul class="flinks">
+          <li><a href="#about">Մեր Մոտեցումը</a></li>
+          <li><a href="#app-section">Հավելված</a></li>
+          <li><a href="#stats">Արդյունքներ</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fcol-title">Կապ</div>
+        <ul class="flinks">
+          <li><a href="https://wa.me/37498000000" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+          <li><a href="mailto:info@gthacademy.am"><i class="fas fa-envelope"></i> Email</a></li>
+        </ul>
+        <div style="margin-top:20px">
+          <button class="btn btn-accent" style="width:100%;justify-content:center;font-size:13px;padding:12px;" onclick="openModal()">
+            Ներկայացնել Դիմում <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <div class="footer-copy">© 2025 GTH Academy. Բոլոր իրավունքները պաշտպանված են: Լիցենզավորված կրթական հարթակ:</div>
+      <div class="socials">
+        <a href="#" class="soc-btn"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-telegram-plane"></i></a>
+        <a href="https://wa.me/37498000000" target="_blank" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="overlayClick(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div id="fwrap">
+      <h2 class="modal-h">Ներկայացնել Դիմում</h2>
+      <p class="modal-s">Լրացրեք ձևաթուղթը, մեր ակադեմիական խորհրդատուն կկապվի Ձեզ հետ 24 ժամվա ընթացքում</p>
+      <form id="aform" onsubmit="submitForm(event)">
+        <div class="fg">
+          <label class="fl">Անուն Ազգանուն</label>
+          <input type="text" class="fi" placeholder="Հովհաննես Հայկյան" required />
+        </div>
+        <div class="fg">
+          <label class="fl">Հեռախոս</label>
+          <input type="tel" class="fi" placeholder="+374 XX XXX XXX" required />
+        </div>
+        <div class="fg">
+          <label class="fl">Ուղղություն</label>
+          <select class="fi fsel">
+            <option value="">Ընտրել ուղղություն</option>
+            <option>Բիզնես Կրթություն</option>
+            <option>Լոգիստիկա & Fulfillment</option>
+            <option>Sourcing — Չինաստան</option>
+            <option>Ապրանքի Վերլուծություն</option>
+            <option>Բիզնես Խորհրդատվություն</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-accent" style="width:100%;justify-content:center;padding:14px;font-size:15px;margin-top:6px;">
+          <i class="fas fa-paper-plane"></i> Ուղարկել Դիմումը
+        </button>
+      </form>
+    </div>
+    <div id="fsuccess" class="fsuccess" style="display:none">
+      <div class="fsuccess-ic"><i class="fas fa-check-circle"></i></div>
+      <h3 class="fsuccess-h">Դիմումն Ընդունված Է!</h3>
+      <p class="fsuccess-s">Մեր ակադեմիական խորհրդատուն կկապվի Ձեզ հետ 24 ժամվա ընթացքում:<br/>Կամ կարող եք անմիջապես դիմել:</p>
+      <a href="https://wa.me/37498000000" target="_blank" class="btn btn-wa" style="margin-top:20px;">
+        <i class="fab fa-whatsapp"></i> Գրել WhatsApp-ում
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 36));
+
+// MODAL
+function openModal()  { document.getElementById('overlay').classList.add('on'); document.body.style.overflow='hidden'; }
+function closeModal() {
+  document.getElementById('overlay').classList.remove('on');
+  document.body.style.overflow='';
+  setTimeout(() => {
+    document.getElementById('fwrap').style.display='block';
+    document.getElementById('fsuccess').style.display='none';
+    document.getElementById('aform').reset();
+  }, 300);
+}
+function overlayClick(e) { if(e.target===document.getElementById('overlay')) closeModal(); }
+
+// FORM
+function submitForm(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Ուղարկվում...';
+  btn.disabled=true;
+  setTimeout(() => {
+    document.getElementById('fwrap').style.display='none';
+    document.getElementById('fsuccess').style.display='block';
+  }, 1100);
+}
+
+// MOBILE MENU
+function openMenu()  { document.getElementById('mmenu').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeMenu() { document.getElementById('mmenu').classList.remove('open'); document.body.style.overflow=''; }
+
+// REVEAL ON SCROLL
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// ANCHOR SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
+});
+
+// COUNTER
+function count(el, end, dur=1600) {
+  const s = performance.now();
+  const tick = now => {
+    const p = Math.min((now-s)/dur, 1);
+    const v = Math.floor((1-Math.pow(1-p,3))*end);
+    el.textContent = v >= 1000 ? Math.floor(v/1000) + ' ' + String(v).slice(-3).padStart(3,'0') : v;
+    if(p<1) requestAnimationFrame(tick);
+    else el.textContent = end >= 1000 ? Math.floor(end/1000)+' '+String(end).slice(-3) : end;
+  };
+  requestAnimationFrame(tick);
+}
+
+// hero metrics
+const heroObs = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting){
+    count(document.getElementById('m1'), 3200);
+    count(document.getElementById('m2'), 150);
+    document.getElementById('m3').textContent = '5';
+    heroObs.disconnect();
+  }
+}, {threshold:.3});
+heroObs.observe(document.getElementById('hero'));
+
+// stats section
+const statsObs = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting){
+    count(document.getElementById('s1'), 3200);
+    count(document.getElementById('s2'), 150);
+    document.getElementById('s3').textContent = '5';
+    statsObs.disconnect();
+  }
+}, {threshold:.3});
+statsObs.observe(document.getElementById('stats'));
+</script>

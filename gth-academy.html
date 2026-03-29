@@ -1,9 +1,4 @@
-import { Hono } from 'hono'
-
-const app = new Hono()
-
-app.get('/', (c) => {
-  return c.html(`<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hy">
 <head>
   <meta charset="UTF-8" />
@@ -1122,7 +1117,3 @@ statsObs.observe(document.getElementById('stats'));
 </script>
 </body>
 </html>
-`)
-})
-
-export default app
