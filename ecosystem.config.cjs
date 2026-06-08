@@ -1,0 +1,18 @@
+module.exports = {
+  apps: [
+    {
+      name: 'gth-academy',
+      script: 'npx',
+      args: 'wrangler pages dev dist --ip 0.0.0.0 --port 3000',
+      env: {
+        NODE_ENV: 'development',
+        PORT: 3000
+      },
+      watch: false,
+      instances: 1,
+      exec_mode: 'fork',
+      error_file: '/tmp/gth-err.log',
+      out_file: '/tmp/gth-out.log'
+    }
+  ]
+}
